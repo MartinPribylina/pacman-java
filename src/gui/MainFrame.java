@@ -1,0 +1,76 @@
+package src.gui;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.io.File;
+
+public class MainFrame extends JFrame implements ActionListener {
+
+    private static final int width = 800;
+    private static final int height = 600;
+    private static final String title = "Pacman";
+
+    private static final String folderPath = System.getProperty("user.dir") + "\\data";
+
+    private final Menu menu;
+
+    private Game game;
+
+    public MainFrame(){
+        FrameSetup();
+
+        menu = new Menu(this);
+        this.add(menu);
+
+        this.setVisible(true); // set frame visible, Calling last so everything gets displayed
+    }
+
+    private void FrameSetup(){
+        this.setTitle(title); // set Title
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // close application
+        this.setResizable(false); // prevent users from resizing window
+        this.setSize(width, height); // set width and height
+        this.setLocationRelativeTo(null); // display in the middle
+
+        ImageIcon icon = new ImageIcon("lib/Pacman.png"); // create image icon
+        this.setIconImage(icon.getImage()); // change icon
+        this.getContentPane().setBackground(Color.BLACK); // change background color
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == menu.getPlay())
+        {
+            System.out.println("Play");
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setCurrentDirectory(new File(folderPath));
+            int result = fileChooser.showOpenDialog(this);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+                this.remove(menu);
+                game = new Game(this, selectedFile.getAbsolutePath());
+                this.add(game);
+                Refresh();
+            }
+        }else if(e.getSource() == menu.getReplay()){
+            System.out.println("Replay");
+        }else if(e.getSource() == menu.getExit()){
+            System.out.println("Exit");
+            this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        }else if(e.getSource() == game.getMenu() || e.getSource() == game.getError()){
+            this.remove(game);
+            game = null;
+            this.add(menu);
+            Refresh();
+        }
+    }
+
+    private void Refresh(){
+        this.revalidate();
+        this.repaint();
+    }
+}

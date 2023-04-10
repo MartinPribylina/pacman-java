@@ -1,7 +1,5 @@
 package src.gui;
 
-import src.game.core.GameLoop;
-import src.game.replay.GameReplay;
 import src.game.save.GameLogging;
 
 import javax.swing.*;
@@ -22,6 +20,8 @@ public class MainFrame extends JFrame implements ActionListener {
     private final Menu menu;
 
     private Game game;
+
+    private GameReplay gameReplay;
 
     public MainFrame(){
         FrameSetup();
@@ -62,14 +62,14 @@ public class MainFrame extends JFrame implements ActionListener {
             }
         }else if(e.getSource() == menu.getReplay()){
             System.out.println("Replay");
-            try(FileInputStream fi = new FileInputStream("replay.bin")) {
+            try(FileInputStream fi = new FileInputStream("replay.txt")) {
                 ObjectInputStream oi = new ObjectInputStream(fi);
                 GameLogging gameLogging = (GameLogging) oi.readObject();
                 oi.close();
                 System.out.println(gameLogging.getTime());
                 System.out.println(gameLogging.getMaze());
                 this.remove(menu);
-                GameReplay gameReplay = new GameReplay(this, gameLogging);
+                gameReplay = new GameReplay(this, gameLogging);
                 this.add(gameReplay);
                 Refresh();
             } catch (FileNotFoundException ex){
@@ -83,10 +83,15 @@ public class MainFrame extends JFrame implements ActionListener {
         }else if(e.getSource() == menu.getExit()){
             System.out.println("Exit");
             this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-        }else if(e.getSource() == game.getMenu() || e.getSource() == game.getError()){
+        }else if(game != null && (e.getSource() == game.getMenu() || e.getSource() == game.getError())){
             game.getGameLoop().stop();
             this.remove(game);
             game = null;
+            this.add(menu);
+            Refresh();
+        }else if(gameReplay != null && e.getSource() == gameReplay.getMenu()){
+            this.remove(gameReplay);
+            gameReplay = null;
             this.add(menu);
             Refresh();
         }

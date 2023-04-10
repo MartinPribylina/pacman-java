@@ -1,4 +1,4 @@
-package src.gui;
+package src.game.replay;
 
 import src.MazePresenter;
 import src.common.CommonMaze;
@@ -6,24 +6,17 @@ import src.common.ElementCreator;
 import src.common.readers.maze.MazeFileReader;
 import src.common.readers.maze.MazeFileReaderResult;
 import src.game.MazeConfigure;
-import src.game.core.FrameBasedGameLoop;
-import src.game.core.GameController;
-import src.game.core.GameLoop;
 import src.game.save.GameLogging;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-
-public class Game extends JPanel{
-
+public class GameReplay extends JPanel{
     private final JButton menu;
     private JButton error;
     private final ActionListener parentListener;
-    FrameBasedGameLoop gameLoop;
-
-    public Game(ActionListener parentListener, String filePath){
+    public GameReplay(ActionListener parentListener, GameLogging gameLogging) {
         this.parentListener = parentListener;
 
         this.setBackground(Color.BLACK);
@@ -49,20 +42,20 @@ public class Game extends JPanel{
         score.setHorizontalAlignment(JLabel.CENTER);
         header.add(score, BorderLayout.CENTER);
 
-        MazeFileReaderResult result = MazeFileReader.ConfigureMaze(filePath, null);
+
+        MazeFileReaderResult result = MazeFileReader.ConfigureMaze(gameLogging.getFilepath(), gameLogging.getMaze().ghosts());
         MazeConfigure mazeConfigure = result.getMazeConfigure();
         CommonMaze maze = mazeConfigure.createMaze();
+        gameLogging.setMaze(maze);
 
-        if (result.getErrorCode() != 0 || (mazeConfigure != null && !mazeConfigure.isReadingSuccess()) || maze == null)
+        if (maze == null)
         {
             JPanel errorPanel = new JPanel();
             errorPanel.setLayout(new BoxLayout(errorPanel, BoxLayout.PAGE_AXIS));
             errorPanel.setBackground(Color.BLACK);
             this.add(errorPanel, BorderLayout.CENTER);
 
-            JLabel errorLabel = ElementCreator.CreateDefaultLabel("Error: " + result.getErrorMessage());
-            errorPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-            errorPanel.add(errorLabel);
+
 
             JPanel wrap = new JPanel();
             wrap.setBackground(Color.BLACK);
@@ -74,37 +67,10 @@ public class Game extends JPanel{
             return;
         }
 
-
         MazePresenter presenter = new MazePresenter(maze);
         this.add(presenter, BorderLayout.CENTER);
 
-        GameLogging gameLogging = new GameLogging(filePath);
-
-        GameController gameController = new GameController(maze, gameLogging);
-
-        gameLoop = new FrameBasedGameLoop(gameController);
-
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('w'), "upAction");
-        this.getActionMap().put("upAction", gameLoop.getPlayerActions().getUpAction());
-
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('s'), "downAction");
-        this.getActionMap().put("downAction", gameLoop.getPlayerActions().getDownAction());
-
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('a'), "leftAction");
-        this.getActionMap().put("leftAction", gameLoop.getPlayerActions().getLeftAction());
-
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('d'), "rightAction");
-        this.getActionMap().put("rightAction", gameLoop.getPlayerActions().getRightAction());
-
-        gameLoop.run();
+        ReplayLoop rp = new ReplayLoop(gameLogging);
+        rp.run();
     }
-
-    public JButton getMenu() {
-        return menu;
-    }
-
-    public JButton getError() {
-        return error;
-    }
-    public GameLoop getGameLoop() { return gameLoop; }
 }

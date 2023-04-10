@@ -24,6 +24,7 @@ public abstract class GameLoop{
 
     public void stop() {
         status = GameStatus.STOPPED;
+        controller.saveIntoFile();
     }
 
     public boolean isGameRunning() {

@@ -3,20 +3,28 @@ package src.game.core;
 import src.common.CommonField;
 import src.common.CommonMaze;
 import src.common.CommonMazeObject;
+import src.game.Maze;
+import src.game.save.GameLogging;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.List;
 import java.util.Random;
 
 public class GameController {
 
     private final CommonMaze maze;
-
     private CommonField.Direction pacmanDirection;
     private CommonField.Direction pacmanFutureDirection;
+    private GameLogging gameLogging;
 
-    public GameController(CommonMaze _maze)
+    public GameController(CommonMaze _maze, GameLogging gameLogging)
     {
         maze = _maze;
+        this.gameLogging = gameLogging;
+        gameLogging.setMaze(_maze);
     }
 
     public void ChangePacmanDirection(CommonField.Direction direction){
@@ -33,6 +41,7 @@ public class GameController {
     public void Update(){
         MovePlayer();
         MoveGhosts();
+        gameLogging.frameTick();
     }
 
     private void MovePlayer(){
@@ -58,7 +67,6 @@ public class GameController {
             }else{
                 ghost.move(RandomDirection(ghost));
             }
-
         }
     }
 
@@ -87,6 +95,19 @@ public class GameController {
                 else return RandomDirection(object);
             }
             default -> throw new IllegalStateException("Unexpected value: " + r);
+        }
+    }
+
+    public void saveIntoFile(){
+        System.out.println("Writing into file");
+        try(FileOutputStream fs = new FileOutputStream("replay.bin")) {
+            ObjectOutputStream os = new ObjectOutputStream(fs);
+            os.writeObject(gameLogging);
+            os.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

@@ -1,11 +1,15 @@
 package src.gui;
 
+import src.game.core.GameLoop;
+import src.game.replay.GameReplay;
+import src.game.save.GameLogging;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
-import java.io.File;
+import java.io.*;
 
 public class MainFrame extends JFrame implements ActionListener {
 
@@ -58,10 +62,29 @@ public class MainFrame extends JFrame implements ActionListener {
             }
         }else if(e.getSource() == menu.getReplay()){
             System.out.println("Replay");
+            try(FileInputStream fi = new FileInputStream("replay.bin")) {
+                ObjectInputStream oi = new ObjectInputStream(fi);
+                GameLogging gameLogging = (GameLogging) oi.readObject();
+                oi.close();
+                System.out.println(gameLogging.getTime());
+                System.out.println(gameLogging.getMaze());
+                this.remove(menu);
+                GameReplay gameReplay = new GameReplay(this, gameLogging);
+                this.add(gameReplay);
+                Refresh();
+            } catch (FileNotFoundException ex){
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+
         }else if(e.getSource() == menu.getExit()){
             System.out.println("Exit");
             this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         }else if(e.getSource() == game.getMenu() || e.getSource() == game.getError()){
+            game.getGameLoop().stop();
             this.remove(game);
             game = null;
             this.add(menu);

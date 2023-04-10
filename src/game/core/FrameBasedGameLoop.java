@@ -11,6 +11,7 @@ public class FrameBasedGameLoop extends GameLoop{
             processInput();
             update();
         }
+        stop();
     }
 
     protected void update() {

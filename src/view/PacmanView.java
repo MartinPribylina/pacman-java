@@ -4,8 +4,9 @@ import src.common.CommonMazeObject;
 import src.common.gfx.PacmanGfx;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public class PacmanView implements ComponentView{
+public class PacmanView implements ComponentView, Serializable {
     private final CommonMazeObject model;
     private final FieldView parent;
 

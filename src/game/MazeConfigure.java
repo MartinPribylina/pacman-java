@@ -1,17 +1,28 @@
 package src.game;
 
 
-public class MazeConfigure{
+import src.common.CommonMazeObject;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MazeConfigure implements Serializable {
 
     private int rows, cols;
     private int currentRow;
     private boolean readingSuccess, error;
 
     private Maze maze = null;
+    private List<CommonMazeObject> ghosts = new ArrayList<>();
 
     public MazeConfigure()
     {
 
+    }
+    public MazeConfigure(List<CommonMazeObject> ghosts)
+    {
+        this.ghosts = ghosts;
     }
 
     public Maze createMaze()
@@ -52,7 +63,17 @@ public class MazeConfigure{
                 }
                 case 'G' -> {
                     maze.setField(currentRow, col, pathField);
-                    maze.setMazeObject(currentRow, col, new Ghost(pathField));
+
+                    if (ghosts.isEmpty()) {
+                        maze.setMazeObject(currentRow, col, new Ghost(pathField));
+                    }else {
+                        for (CommonMazeObject ghost : ghosts){
+                            if (((Ghost)ghost).getStart().equals(pathField)) {
+                                maze.setMazeObject(currentRow, col, new Ghost(pathField, ((Ghost) ghost).ghostType, ((Ghost) ghost).getGhostDirections()));
+                            }
+                        }
+                    }
+
                 }
                 default -> {
                 }

@@ -25,6 +25,7 @@ public abstract class MazeObject implements CommonMazeObject, Observable.Observe
     @Override
     public boolean move(CommonField.Direction direction) {
         CommonField nextField = this.field.nextField(direction);
+        if(this instanceof Ghost) System.out.println(nextField.canMove());
         if(!nextField.canMove()) return false;
         field.removeObserver(this);
         field.notifyObservers();

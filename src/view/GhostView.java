@@ -6,8 +6,9 @@ import src.common.gfx.GhostGfx;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.io.Serializable;
 
-public class GhostView implements ComponentView {
+public class GhostView implements ComponentView, Serializable {
     private final CommonMazeObject model;
     private final FieldView parent;
 

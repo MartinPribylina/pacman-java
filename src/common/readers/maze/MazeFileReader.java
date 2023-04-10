@@ -1,15 +1,23 @@
 package src.common.readers.maze;
 
+import src.common.CommonMazeObject;
 import src.game.MazeConfigure;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Scanner;
 
 public class MazeFileReader {
 
-    public static MazeFileReaderResult ConfigureMaze(String filePath){
-        MazeConfigure mazeConfigure = new MazeConfigure();
+    public static MazeFileReaderResult ConfigureMaze(String filePath, List<CommonMazeObject> ghosts){
+        MazeConfigure mazeConfigure = null;
+        if (ghosts != null){
+            mazeConfigure = new MazeConfigure(ghosts);
+        }else {
+            mazeConfigure = new MazeConfigure();
+        }
+
 
         boolean firstLine = true;
         int colsCount = 0;

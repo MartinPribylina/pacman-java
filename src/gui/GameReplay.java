@@ -1,4 +1,4 @@
-package src.game.replay;
+package src.gui;
 
 import src.MazePresenter;
 import src.common.CommonMaze;
@@ -6,6 +6,7 @@ import src.common.ElementCreator;
 import src.common.readers.maze.MazeFileReader;
 import src.common.readers.maze.MazeFileReaderResult;
 import src.game.MazeConfigure;
+import src.game.replay.ReplayLoop;
 import src.game.save.GameLogging;
 
 import javax.swing.*;
@@ -72,5 +73,9 @@ public class GameReplay extends JPanel{
 
         ReplayLoop rp = new ReplayLoop(gameLogging);
         rp.run();
+    }
+
+    public JButton getMenu() {
+        return menu;
     }
 }

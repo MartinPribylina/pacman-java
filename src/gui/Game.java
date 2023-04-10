@@ -8,17 +8,29 @@ import src.common.readers.maze.MazeFileReaderResult;
 import src.game.MazeConfigure;
 import src.game.core.FrameBasedGameLoop;
 import src.game.core.GameController;
+import src.view.ComponentView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.font.FontRenderContext;
+import java.awt.font.LineBreakMeasurer;
+import java.awt.font.TextLayout;
+import java.awt.geom.Rectangle2D;
+import java.text.AttributedCharacterIterator;
+import java.text.AttributedString;
 
 
-public class Game extends JPanel{
+public class Game extends JPanel implements ActionListener{
 
     private final JButton menu;
+    private JButton pause;
     private JButton error;
     private final ActionListener parentListener;
+    private FrameBasedGameLoop gameLoop;
+
+    private MazeObjectDescription objectDescription;
 
     public Game(ActionListener parentListener, String filePath){
         this.parentListener = parentListener;
@@ -38,7 +50,9 @@ public class Game extends JPanel{
         this.add(sideBar, BorderLayout.WEST);
 
         menu = ElementCreator.CreateDefaultButton("Menu", 100, 50, parentListener);
-        sideBar.add(menu, BorderLayout.WEST);
+        pause = ElementCreator.CreateDefaultButton("Pause", 100, 50, this);
+        sideBar.add(menu);
+        sideBar.add(pause);
 
         JLabel score = ElementCreator.CreateDefaultLabel("Score: 0");
         score.setHorizontalTextPosition(JLabel.CENTER); // Horizontal text possition
@@ -72,26 +86,64 @@ public class Game extends JPanel{
         }
 
 
-        MazePresenter presenter = new MazePresenter(maze);
+        MazePresenter presenter = new MazePresenter(maze, this);
         this.add(presenter, BorderLayout.CENTER);
 
         GameController gameController = new GameController(maze);
 
-        FrameBasedGameLoop gameLoop = new FrameBasedGameLoop(gameController);
+        gameLoop = new FrameBasedGameLoop(gameController);
 
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('w'), "upAction");
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "upAction");
         this.getActionMap().put("upAction", gameLoop.getPlayerActions().getUpAction());
 
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('s'), "downAction");
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "downAction");
         this.getActionMap().put("downAction", gameLoop.getPlayerActions().getDownAction());
 
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('a'), "leftAction");
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"), "leftAction");
         this.getActionMap().put("leftAction", gameLoop.getPlayerActions().getLeftAction());
 
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('d'), "rightAction");
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("RIGHT"), "rightAction");
         this.getActionMap().put("rightAction", gameLoop.getPlayerActions().getRightAction());
 
         gameLoop.run();
+    }
+
+    public void paint(Graphics g){
+        super.paint(g);
+
+        if (objectDescription == null)
+            return;
+
+        Graphics2D g2 = (Graphics2D)g;
+
+        Rectangle2D rect = new Rectangle2D.Double(objectDescription.x, objectDescription.y,
+                objectDescription.size.width, objectDescription.size.height);
+        g2.setColor(Color.DARK_GRAY);
+        g2.fill(rect);
+        g2.setFont(new Font("Serif", 1, 20));
+        g2.setColor(Color.WHITE);
+        g2.drawString(objectDescription.title, objectDescription.x + 5, objectDescription.y + 20);
+        g2.setFont(new Font("Serif", 1, 10));
+
+        AttributedString as = new AttributedString(objectDescription.description);
+        AttributedCharacterIterator aci = as.getIterator();
+        FontRenderContext frc = g2.getFontRenderContext();
+        LineBreakMeasurer lbm = new LineBreakMeasurer(aci, frc);
+
+        int x = objectDescription.x + 5;
+        int y = objectDescription.y + 40;
+
+        while (lbm.getPosition() < aci.getEndIndex()) {
+            TextLayout tl = lbm.nextLayout(objectDescription.size.width);
+            tl.draw(g2, x, y + tl.getAscent());
+            y += tl.getDescent() + tl.getLeading() + tl.getAscent();
+        }
+
+
     }
 
     public JButton getMenu() {
@@ -100,5 +152,22 @@ public class Game extends JPanel{
 
     public JButton getError() {
         return error;
+    }
+
+    public void setObjectDescription(MazeObjectDescription objectDescription) {
+        this.objectDescription = objectDescription;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == pause){
+            if (gameLoop.isGameRunning()){
+                gameLoop.stop();
+                pause.setText("Play");
+            }else{
+                gameLoop.run();
+                pause.setText("Pause");
+            }
+        }
     }
 }

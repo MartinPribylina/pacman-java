@@ -14,7 +14,7 @@ public class Ghost extends MazeObject implements CommonMazeObject, IGhost {
 
     int ghostType;
     private List<CommonField.Direction> ghostDirections = new ArrayList<>();
-    private CommonField start;
+    public CommonField start;
     public Ghost(CommonField field) {
         super(field);
         start = field;
@@ -71,9 +71,5 @@ public class Ghost extends MazeObject implements CommonMazeObject, IGhost {
 
     public List<CommonField.Direction> getGhostDirections() {
         return ghostDirections;
-    }
-
-    public CommonField getStart() {
-        return start;
     }
 }

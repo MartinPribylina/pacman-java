@@ -100,7 +100,7 @@ public class GameController {
 
     public void saveIntoFile(){
         System.out.println("Writing into file");
-        try(FileOutputStream fs = new FileOutputStream("replay.bin")) {
+        try(FileOutputStream fs = new FileOutputStream("replay.txt")) {
             ObjectOutputStream os = new ObjectOutputStream(fs);
             os.writeObject(gameLogging);
             os.close();

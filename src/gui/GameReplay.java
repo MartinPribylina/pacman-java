@@ -43,8 +43,7 @@ public class GameReplay extends JPanel{
         score.setHorizontalAlignment(JLabel.CENTER);
         header.add(score, BorderLayout.CENTER);
 
-
-        MazeFileReaderResult result = MazeFileReader.ConfigureMaze(gameLogging.getFilepath(), gameLogging.getMaze().ghosts());
+        MazeFileReaderResult result = MazeFileReader.ConfigureMaze(gameLogging.getFilepath(), gameLogging.getGhostsData());
         MazeConfigure mazeConfigure = result.getMazeConfigure();
         CommonMaze maze = mazeConfigure.createMaze();
         gameLogging.setMaze(maze);

@@ -54,7 +54,6 @@ public class Pacman extends MazeObject implements CommonMazeObject {
             animStep = 1;
             add = !add;
         }
-
         return true;
     }
 }

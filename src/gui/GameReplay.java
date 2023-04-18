@@ -11,12 +11,14 @@ import src.game.save.GameLogging;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GameReplay extends JPanel{
     private final JButton menu;
     private JButton error;
     private final ActionListener parentListener;
+    private ReplayLoop rp;
     public GameReplay(ActionListener parentListener, GameLogging gameLogging) {
         this.parentListener = parentListener;
 
@@ -36,6 +38,30 @@ public class GameReplay extends JPanel{
 
         menu = ElementCreator.CreateDefaultButton("Menu", 100, 50, parentListener);
         sideBar.add(menu, BorderLayout.WEST);
+
+        JButton forward = ElementCreator.CreateDefaultButton(">>", 100, 30, parentListener);
+        forward.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rp.back = false;
+                synchronized(rp) {
+                    rp.notify();
+                }
+            }
+        });
+        sideBar.add(forward, BorderLayout.WEST);
+
+        JButton backwards = ElementCreator.CreateDefaultButton("<<", 100, 30, parentListener);
+        backwards.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rp.back = true;
+                synchronized(rp) {
+                    rp.notify();
+                }
+            }
+        });
+        sideBar.add(backwards, BorderLayout.WEST);
 
         JLabel score = ElementCreator.CreateDefaultLabel("Score: 0");
         score.setHorizontalTextPosition(JLabel.CENTER); // Horizontal text possition
@@ -70,7 +96,7 @@ public class GameReplay extends JPanel{
         MazePresenter presenter = new MazePresenter(maze);
         this.add(presenter, BorderLayout.CENTER);
 
-        ReplayLoop rp = new ReplayLoop(gameLogging);
+        rp = new ReplayLoop(gameLogging);
         rp.run();
     }
 

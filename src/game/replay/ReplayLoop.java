@@ -25,7 +25,8 @@ public class ReplayLoop {
 
     protected void processReplayLoop(){
         CommonMaze maze = gameLogging.getMaze();
-        for (step = -1; step < gameLogging.getTime();) {
+        step = -1;
+        while (true){
             synchronized (this){
                 try{
                     this.wait();
@@ -33,7 +34,18 @@ public class ReplayLoop {
                     e.printStackTrace();
                 }
             }
-            if (!back) step++;
+            if (!back){
+                step++;
+            }
+
+            if (!back && step > gameLogging.getTime() - 1){
+                step--;
+                continue;
+            }
+
+            if(step < 0)
+                continue;
+
             System.out.println(step);
             movePacman(maze, step);
             for (CommonMazeObject ghostCommon : maze.ghosts()) {
@@ -57,20 +69,15 @@ public class ReplayLoop {
                 case LEFT -> dir = RIGHT;
                 case RIGHT -> dir = LEFT;
             }
-            CommonField nextField = pacman.field.nextField(dir);
-            pacman.field.removeObserver(pacman);
-            pacman.field.notifyObservers();
-            nextField.addObserver(pacman);
-            pacman.field = nextField;
-            nextField.notifyObservers();
-            pacman.setLastMove(dir);
+            pacman.move(dir);
+            pacman.setLastMove(pacmanDirection.get(i));
         }
     }
     public void moveGhost(CommonMazeObject CMOghost, int i) {
             MazeObject ghost = (MazeObject) CMOghost;
             CommonField.Direction dir = null;
             List<CommonField.Direction> ghostDirection = ((Ghost) ghost).getGhostDirections();
-            System.out.println(ghostDirection);
+            //System.out.println(ghostDirection);
             if (ghostDirection.get(i) != null && !back){
                 dir = ghostDirection.get(i);
                 ghost.move(dir);
@@ -81,15 +88,9 @@ public class ReplayLoop {
                     case LEFT -> dir = RIGHT;
                     case RIGHT -> dir = LEFT;
                 }
-                //ghost.move(dir);
-                CommonField nextField = ghost.field.nextField(dir);
-                ghost.field.removeObserver(ghost);
-                ghost.field.notifyObservers();
-                nextField.addObserver(ghost);
-                ghost.field = nextField;
-                nextField.notifyObservers();
-                ghost.setLastMove(dir);
+                ghost.move(dir);
+                ghost.setLastMove(ghostDirection.get(i));
             }
-            System.out.println(dir);
+            //System.out.println(dir);
     }
 }

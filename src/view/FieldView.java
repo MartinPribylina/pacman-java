@@ -29,12 +29,11 @@ public class FieldView extends JPanel implements Observable.Observer {
     private void privUpdate() {
         if (this.model.canMove()) {
             this.setBackground(Color.lightGray);
+            this.objects.clear();
             if (!this.model.isEmpty()) {
                 CommonMazeObject o = this.model.get();
                 ComponentView v = o.isPacman() ? new PacmanView(this, this.model.get()) : new GhostView(this, this.model.get());
                 this.objects.add(v);
-            } else {
-                this.objects.clear();
             }
 
         } else {

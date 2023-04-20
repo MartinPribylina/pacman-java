@@ -8,10 +8,12 @@ import src.game.MazeObject;
 import src.game.save.GameLogging;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static src.common.CommonField.Direction.*;
 
 public class ReplayLoop {
+    private Thread replayThread;
     private GameLogging gameLogging;
     public int step;
     public boolean back = false;
@@ -19,13 +21,48 @@ public class ReplayLoop {
         this.gameLogging = gameLogging;
     }
     public void run() {
-        Thread replayThread = new Thread(this::processReplayLoop);
+        replayThread = new Thread(this::processReplayLoop);
+        replayThread.start();
+    }
+    public void play(int delay) {
+        replayThread.stop();
+        CommonMaze maze = gameLogging.getMaze();
+        if(step == -1) step++;
+        if (!back){
+            for (;step < gameLogging.getTime(); step++){
+                movePacman(maze, step);
+                for (CommonMazeObject ghostCommon : maze.ghosts()) {
+                    moveGhost(ghostCommon, step);
+                }
+                try {
+                    Thread.sleep(delay);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println(step);
+            }
+        }else {
+            for (;step > -1; step--){
+                movePacman(maze, step);
+                for (CommonMazeObject ghostCommon : maze.ghosts()) {
+                    moveGhost(ghostCommon, step);
+                }
+                try {
+                    Thread.sleep(delay);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println(step);
+            }
+        }
+
+        if(step > gameLogging.getTime()-1) step--;
+        replayThread = new Thread(this::processReplayLoop);
         replayThread.start();
     }
 
     protected void processReplayLoop(){
         CommonMaze maze = gameLogging.getMaze();
-        step = -1;
         while (true){
             synchronized (this){
                 try{
@@ -46,12 +83,13 @@ public class ReplayLoop {
             if(step < 0)
                 continue;
 
-            System.out.println(step);
+
             movePacman(maze, step);
             for (CommonMazeObject ghostCommon : maze.ghosts()) {
                 moveGhost(ghostCommon, step);
             }
             if (back) step--;
+            System.out.println(step);
         }
     }
     public void movePacman(CommonMaze maze, int i) {
@@ -92,5 +130,9 @@ public class ReplayLoop {
                 ghost.setLastMove(ghostDirection.get(i));
             }
             //System.out.println(dir);
+    }
+
+    public void setStep(int step) {
+        this.step = step;
     }
 }

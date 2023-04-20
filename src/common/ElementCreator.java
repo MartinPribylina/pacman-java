@@ -22,6 +22,20 @@ public class ElementCreator {
 
         return button;
     }
+    public static JButton CreateButton(String text, int width, int height, ActionListener actionListener)
+    {
+        JButton button = new JButton();
+        button.setText(text);
+        Dimension size = new Dimension(width, height);
+        button.setMinimumSize(size);
+        button.setPreferredSize(size);
+        button.setMaximumSize(size);
+        button.addActionListener(actionListener);
+        button.setFocusable(false);
+        button.setFont(font);
+
+        return button;
+    }
 
     public static JLabel CreateDefaultLabel(String text)
     {

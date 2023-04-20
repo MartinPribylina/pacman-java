@@ -68,7 +68,7 @@ public class MazeFileReader {
             }
 
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
+            System.out.println("An error occurred." + filePath);
             e.printStackTrace();
             return new MazeFileReaderResult(1, e.getMessage());
         }catch (Exception e){

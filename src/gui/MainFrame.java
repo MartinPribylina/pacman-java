@@ -15,7 +15,8 @@ public class MainFrame extends JFrame implements ActionListener {
     private static final int height = 600;
     private static final String title = "Pacman";
 
-    private static final String folderPath = System.getProperty("user.dir") + "\\data";
+    private static final String mazeFolderPath = System.getProperty("user.dir") + "\\data" + "\\maze";
+    private static final String replayFolderPath = "data" + "\\replay\\" + "replay.txt";
 
     private final Menu menu;
 
@@ -50,7 +51,7 @@ public class MainFrame extends JFrame implements ActionListener {
         {
             System.out.println("Play");
             JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setCurrentDirectory(new File(folderPath));
+            fileChooser.setCurrentDirectory(new File(mazeFolderPath));
             int result = fileChooser.showOpenDialog(this);
             if (result == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fileChooser.getSelectedFile();
@@ -62,22 +63,28 @@ public class MainFrame extends JFrame implements ActionListener {
             }
         }else if(e.getSource() == menu.getReplay()){
             System.out.println("Replay");
-            try(FileInputStream fi = new FileInputStream("replay.txt")) {
-                ObjectInputStream oi = new ObjectInputStream(fi);
-                GameLogging gameLogging = (GameLogging) oi.readObject();
-                oi.close();
-                System.out.println(gameLogging.getTime());
-                System.out.println(gameLogging.getMaze());
-                this.remove(menu);
-                gameReplay = new GameReplay(this, gameLogging);
-                this.add(gameReplay);
-                Refresh();
-            } catch (FileNotFoundException ex){
-                ex.printStackTrace();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (ClassNotFoundException ex) {
-                throw new RuntimeException(ex);
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setCurrentDirectory(new File(replayFolderPath));
+            int result = fileChooser.showOpenDialog(this);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                try(FileInputStream fi = new FileInputStream(selectedFile.getAbsolutePath())) {
+                    ObjectInputStream oi = new ObjectInputStream(fi);
+                    GameLogging gameLogging = (GameLogging) oi.readObject();
+                    oi.close();
+                    System.out.println(gameLogging.getTime());
+                    System.out.println(gameLogging.getMaze());
+                    this.remove(menu);
+                    gameReplay = new GameReplay(this, gameLogging);
+                    this.add(gameReplay);
+                    Refresh();
+                } catch (FileNotFoundException ex){
+                    ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
 
         }else if(e.getSource() == menu.getExit()){

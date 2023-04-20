@@ -10,17 +10,28 @@ import src.game.replay.ReplayLoop;
 import src.game.save.GameLogging;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.TimeUnit;
 
-public class GameReplay extends JPanel{
+public class GameReplay extends JPanel implements ActionListener{
     private final JButton menu;
     private JButton error;
+    private JButton forward;
+    private JButton backwards;
+    private JButton playForward;
+    private JButton playBackwards;
+    private GameLogging gameLogging;
+    private MazePresenter presenter;
+    private CommonMaze maze;
     private final ActionListener parentListener;
     private ReplayLoop rp;
+    private DefaultPosition defaultPosition;
     public GameReplay(ActionListener parentListener, GameLogging gameLogging) {
         this.parentListener = parentListener;
+        this.gameLogging = gameLogging;
 
         this.setBackground(Color.BLACK);
         this.setLayout(new BorderLayout());
@@ -33,35 +44,23 @@ public class GameReplay extends JPanel{
 
         JPanel sideBar = new JPanel();
         sideBar.setBackground(Color.BLACK);
-        sideBar.setLayout(new BoxLayout(sideBar, BoxLayout.PAGE_AXIS));
+        sideBar.setPreferredSize(new Dimension(100, 700));
+        sideBar.setMaximumSize(new Dimension(100, 700));
+        sideBar.setMinimumSize(new Dimension(100, 700));
+        sideBar.setLayout(new FlowLayout());
         this.add(sideBar, BorderLayout.WEST);
 
         menu = ElementCreator.CreateDefaultButton("Menu", 100, 50, parentListener);
-        sideBar.add(menu, BorderLayout.WEST);
+        sideBar.add(menu, BorderLayout.PAGE_START);
+        forward = ElementCreator.CreateButton(">", 45, 30, this);
+        backwards = ElementCreator.CreateButton("<", 45, 30, this);
+        playForward = ElementCreator.CreateDefaultButton("\u00BB", 45, 30, this);
+        playBackwards = ElementCreator.CreateDefaultButton("\u00AB", 45, 30, this);
 
-        JButton forward = ElementCreator.CreateDefaultButton(">>", 100, 30, parentListener);
-        forward.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                rp.back = false;
-                synchronized(rp) {
-                    rp.notify();
-                }
-            }
-        });
-        sideBar.add(forward, BorderLayout.WEST);
-
-        JButton backwards = ElementCreator.CreateDefaultButton("<<", 100, 30, parentListener);
-        backwards.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                rp.back = true;
-                synchronized(rp) {
-                    rp.notify();
-                }
-            }
-        });
         sideBar.add(backwards, BorderLayout.WEST);
+        sideBar.add(forward, BorderLayout.WEST);
+        sideBar.add(playBackwards, BorderLayout.WEST);
+        sideBar.add(playForward, BorderLayout.WEST);
 
         JLabel score = ElementCreator.CreateDefaultLabel("Score: 0");
         score.setHorizontalTextPosition(JLabel.CENTER); // Horizontal text possition
@@ -71,7 +70,7 @@ public class GameReplay extends JPanel{
 
         MazeFileReaderResult result = MazeFileReader.ConfigureMaze(gameLogging.getFilepath(), gameLogging.getGhostsData());
         MazeConfigure mazeConfigure = result.getMazeConfigure();
-        CommonMaze maze = mazeConfigure.createMaze();
+        maze = mazeConfigure.createMaze();
         gameLogging.setMaze(maze);
 
         if (maze == null)
@@ -80,8 +79,6 @@ public class GameReplay extends JPanel{
             errorPanel.setLayout(new BoxLayout(errorPanel, BoxLayout.PAGE_AXIS));
             errorPanel.setBackground(Color.BLACK);
             this.add(errorPanel, BorderLayout.CENTER);
-
-
 
             JPanel wrap = new JPanel();
             wrap.setBackground(Color.BLACK);
@@ -93,13 +90,47 @@ public class GameReplay extends JPanel{
             return;
         }
 
-        MazePresenter presenter = new MazePresenter(maze);
-        this.add(presenter, BorderLayout.CENTER);
+        defaultPosition = new DefaultPosition(this);
+
+        this.add(defaultPosition, BorderLayout.CENTER);
+        setVisible(true);
 
         rp = new ReplayLoop(gameLogging);
         rp.run();
     }
-
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == defaultPosition.getBegining()){
+            rp.setStep(-1);
+            defaultPosition.setVisible(false);
+            this.remove(defaultPosition);
+            presenter = new MazePresenter(maze);
+            this.add(presenter);
+        } else if (e.getSource() == defaultPosition.getEnd()) {
+            rp.setStep(-1);
+            defaultPosition.setVisible(false);
+            this.remove(defaultPosition);
+            presenter = new MazePresenter(maze);
+            this.add(presenter);
+            rp.play(0);
+        } else if (e.getSource() == backwards) {
+            rp.back = true;
+            synchronized(rp) {
+                rp.notify();
+            }
+        } else if (e.getSource() == forward) {
+            rp.back = false;
+            synchronized(rp) {
+                rp.notify();
+            }
+        } else if (e.getSource() == playForward) {
+            rp.back = false;
+            rp.play(300);
+        } else if (e.getSource() == playBackwards) {
+            rp.back = true;
+            rp.play(300);
+        }
+    }
     public JButton getMenu() {
         return menu;
     }

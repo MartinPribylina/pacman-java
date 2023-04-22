@@ -10,6 +10,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Random;
 
@@ -100,7 +104,17 @@ public class GameController {
 
     public void saveIntoFile(){
         System.out.println("Writing into file");
-        try(FileOutputStream fs = new FileOutputStream("data\\replay\\replay.txt")) {
+
+        String replayPath = System.getProperty("user.dir") + "\\data\\replay";
+
+        try {
+            Files.createDirectories(Paths.get(replayPath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("-yyyyMMdd-HHmm");
+        LocalDateTime now = LocalDateTime.now();
+        try(FileOutputStream fs = new FileOutputStream(replayPath + "\\Replay" + dtf.format(now) + ".txt")) {
             ObjectOutputStream os = new ObjectOutputStream(fs);
             os.writeObject(gameLogging);
             os.close();

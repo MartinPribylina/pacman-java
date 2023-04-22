@@ -16,7 +16,7 @@ public class MainFrame extends JFrame implements ActionListener {
     private static final String title = "Pacman";
 
     private static final String mazeFolderPath = System.getProperty("user.dir") + "\\data" + "\\maze";
-    private static final String replayFolderPath = "data" + "\\replay\\" + "replay.txt";
+    private static final String replayFolderPath = System.getProperty("user.dir") + "\\data\\replay";
 
     private final Menu menu;
 

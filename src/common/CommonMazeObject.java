@@ -1,6 +1,8 @@
 package src.common;
 
-public interface CommonMazeObject {
+import java.io.Serializable;
+
+public interface CommonMazeObject extends Serializable {
     boolean canMove(CommonField.Direction var1);
 
     boolean move(CommonField.Direction var1);
@@ -15,6 +17,10 @@ public interface CommonMazeObject {
 
     CommonField.Direction lastMove();
 
+    void setLastMove(CommonField.Direction direction);
+
     int animStep();
+
+    int getStepCounter();
 }
 

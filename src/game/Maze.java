@@ -6,10 +6,11 @@ import src.common.CommonMaze;
 import src.common.CommonMazeObject;
 import src.common.Observable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Maze implements CommonMaze {
+public class Maze implements CommonMaze, Serializable {
 
     private final int cols;
     private final int rows;
@@ -33,7 +34,7 @@ public class Maze implements CommonMaze {
 
     public void setMazeObject(int row, int col, CommonMazeObject mazeObject){
         fields[row][col].addObserver((Observable.Observer) mazeObject);
-        if(!mazeObject.isPacman())
+        if(!mazeObject.isPacman() && !ghosts.contains(mazeObject))
             ghosts.add(mazeObject);
         if(mazeObject.isPacman())
             pacman = mazeObject;

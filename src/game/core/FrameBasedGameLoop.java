@@ -11,6 +11,9 @@ public class FrameBasedGameLoop extends GameLoop{
             processInput();
             update();
         }
+        // Toto by tu nemalo byť, teraz keď dám pause tak to zakaždým uloží, ukladanie treba bindnuť na koniec hry a Back to menu button
+        // A stop nech len zastuvuje hru
+        stop();
     }
 
     protected void update() {

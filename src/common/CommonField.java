@@ -1,6 +1,8 @@
 package src.common;
 
-public interface CommonField extends Observable {
+import java.io.Serializable;
+
+public interface CommonField extends Observable, Serializable {
     CommonField nextField(Direction var1);
 
     boolean isEmpty();

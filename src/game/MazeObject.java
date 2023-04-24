@@ -49,7 +49,7 @@ public abstract class MazeObject implements CommonMazeObject, Observable.Observe
     public CommonField.Direction lastMove(){
         return lastMove;
     }
-
+    public void setLastMove(CommonField.Direction dir) {lastMove = dir;}
     @Override
     public int animStep(){
         return animStep;

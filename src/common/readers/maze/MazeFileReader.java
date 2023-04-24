@@ -1,15 +1,27 @@
 package src.common.readers.maze;
 
+import src.common.CommonField;
+import src.common.CommonMazeObject;
 import src.game.MazeConfigure;
+import src.game.PathField;
+import src.game.save.GhostData;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Dictionary;
+import java.util.List;
 import java.util.Scanner;
 
 public class MazeFileReader {
 
-    public static MazeFileReaderResult ConfigureMaze(String filePath){
-        MazeConfigure mazeConfigure = new MazeConfigure();
+    public static MazeFileReaderResult ConfigureMaze(String filePath, Dictionary<PathField, GhostData> ghostsData){
+        MazeConfigure mazeConfigure = null;
+        if (ghostsData != null){
+            mazeConfigure = new MazeConfigure(ghostsData);
+        }else {
+            mazeConfigure = new MazeConfigure();
+        }
+
 
         boolean firstLine = true;
         int colsCount = 0;
@@ -56,10 +68,11 @@ public class MazeFileReader {
             }
 
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
+            System.out.println("An error occurred." + filePath);
             e.printStackTrace();
             return new MazeFileReaderResult(1, e.getMessage());
         }catch (Exception e){
+            System.out.println(e.getMessage());
             return new MazeFileReaderResult(2, e.getMessage());
         }
 

@@ -122,6 +122,7 @@ public class GameController implements Serializable {
         MoveGhosts();
         UpdateGameStats();
         gameLogging.frameTick();
+        gameLogging.pacmanMove(pacmanDirection);
     }
 
     private void UpdateGameStats() {
@@ -149,11 +150,11 @@ public class GameController implements Serializable {
         CommonMazeObject pacman = maze.pacman();
         if (pacman.canMove(pacmanDirection)){
             pacman.move(pacmanDirection);
-        }else if(pacmanFutureDirection != null && pacmanDirection != pacmanFutureDirection){
-            if(pacman.canMove(pacmanFutureDirection)){
-                pacmanDirection = pacmanFutureDirection;
-                pacman.move(pacmanDirection);
-            }
+        }else if(pacmanFutureDirection != null && pacmanDirection != pacmanFutureDirection && pacman.canMove(pacmanFutureDirection)){
+            pacmanDirection = pacmanFutureDirection;
+            pacman.move(pacmanDirection);
+        }else {
+            pacmanDirection = null;
         }
     }
 
@@ -170,35 +171,6 @@ public class GameController implements Serializable {
         }
     }
 
-    //Presunút tak aby ukladal Game Logger samého seba a volalo sa to pri ukončení hry
-    public void saveIntoFile(){
-        System.out.println("Writing into file");
-
-        String replayPath = System.getProperty("user.dir") + "\\data\\replay";
-
-        try {
-            Files.createDirectories(Paths.get(replayPath));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("-yyyyMMdd-HHmm");
-        LocalDateTime now = LocalDateTime.now();
-        try(FileOutputStream fs = new FileOutputStream(replayPath + "\\Replay" + dtf.format(now) + ".txt")) {
-            ObjectOutputStream os = new ObjectOutputStream(fs);
-            try {
-                os.writeObject(gameLogging);
-            }catch (Exception e){
-                System.out.println("Failed to save");
-                e.printStackTrace();
-            }
-            os.close();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public void setSteps(JLabel steps) {
         this.steps = steps;
     }
@@ -209,5 +181,9 @@ public class GameController implements Serializable {
 
     public void setScore(JLabel score) {
         this.score = score;
+    }
+
+    public GameLogging getGameLogging() {
+        return gameLogging;
     }
 }

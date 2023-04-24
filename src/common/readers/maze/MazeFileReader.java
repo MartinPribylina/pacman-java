@@ -1,17 +1,16 @@
 package src.common.readers.maze;
 
 import src.game.MazeConfigure;
-import src.game.objects.PathField;
-import src.game.save.GhostData;
+import src.game.replay.GhostData;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Dictionary;
 import java.util.Scanner;
+import java.util.List;
 
 public class MazeFileReader {
 
-    public static MazeFileReaderResult ConfigureMaze(String filePath, Dictionary<PathField, GhostData> ghostsData){
+    public static MazeFileReaderResult ConfigureMaze(String filePath, List<GhostData> ghostsData){
         MazeConfigure mazeConfigure = null;
         if (ghostsData != null){
             mazeConfigure = new MazeConfigure(ghostsData);

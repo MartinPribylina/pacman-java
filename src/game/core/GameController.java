@@ -66,6 +66,7 @@ public class GameController implements Serializable {
         UpdateGameStats();
         CheckGameEnd();
         gameLogging.frameTick();
+        gameLogging.pacmanMove(pacmanDirection);
     }
 
     private void CheckGameEnd(){
@@ -129,11 +130,11 @@ public class GameController implements Serializable {
         CommonMazeObject pacman = maze.pacman();
         if (pacman.canMove(pacmanDirection)){
             pacman.move(pacmanDirection);
-        }else if(pacmanFutureDirection != null && pacmanDirection != pacmanFutureDirection){
-            if(pacman.canMove(pacmanFutureDirection)){
-                pacmanDirection = pacmanFutureDirection;
-                pacman.move(pacmanDirection);
-            }
+        }else if(pacmanFutureDirection != null && pacmanDirection != pacmanFutureDirection && pacman.canMove(pacmanFutureDirection)){
+            pacmanDirection = pacmanFutureDirection;
+            pacman.move(pacmanDirection);
+        }else {
+            pacmanDirection = null;
         }
     }
 
@@ -147,35 +148,6 @@ public class GameController implements Serializable {
             }else{
                 ghost.move(GameLogicHelper.RandomDirection(ghost));
             }
-        }
-    }
-
-    //Presunút tak aby ukladal Game Logger samého seba a volalo sa to pri ukončení hry
-    public void saveIntoFile(){
-        System.out.println("Writing into file");
-
-        String replayPath = System.getProperty("user.dir") + "\\data\\replay";
-
-        try {
-            Files.createDirectories(Paths.get(replayPath));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("-yyyyMMdd-HHmm");
-        LocalDateTime now = LocalDateTime.now();
-        try(FileOutputStream fs = new FileOutputStream(replayPath + "\\Replay" + dtf.format(now) + ".txt")) {
-            ObjectOutputStream os = new ObjectOutputStream(fs);
-            try {
-                os.writeObject(gameLogging);
-            }catch (Exception e){
-                System.out.println("Failed to save");
-                e.printStackTrace();
-            }
-            os.close();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -193,5 +165,9 @@ public class GameController implements Serializable {
 
     public void setGameLoop(GameLoop gameLoop) {
         this.gameLoop = gameLoop;
+    }
+
+    public GameLogging getGameLogging() {
+        return gameLogging;
     }
 }

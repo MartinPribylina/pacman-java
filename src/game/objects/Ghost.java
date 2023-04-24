@@ -13,7 +13,7 @@ import java.util.Random;
 public class Ghost extends MazeObject implements CommonMazeObject, IGhost {
 
     int ghostType;
-    private List<CommonField.Direction> ghostDirections = new ArrayList<>();
+    private List<CommonField.Direction> ghostPath = new ArrayList<>();
     public CommonField start;
     public Ghost(CommonField field) {
         super(field);
@@ -21,10 +21,10 @@ public class Ghost extends MazeObject implements CommonMazeObject, IGhost {
         Random rand = new Random();
         ghostType = rand.nextInt(4);
     }
-    public Ghost(CommonField field, int ghostType, List<CommonField.Direction> ghostDirections) {
+    public Ghost(CommonField field, int ghostType, List<CommonField.Direction> ghostPath) {
         super(field);
         this.ghostType = ghostType;
-        this.ghostDirections = ghostDirections;
+        this.ghostPath = ghostPath;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class Ghost extends MazeObject implements CommonMazeObject, IGhost {
     @Override
     public boolean move(CommonField.Direction direction)
     {
-        ghostDirections.add(direction);
+        ghostPath.add(direction);
         boolean result = super.move(direction);
         if (!result)
             return false;
@@ -74,7 +74,7 @@ public class Ghost extends MazeObject implements CommonMazeObject, IGhost {
         return ghostType;
     }
 
-    public List<CommonField.Direction> getGhostDirections() {
-        return ghostDirections;
+    public List<CommonField.Direction> getGhostPath() {
+        return ghostPath;
     }
 }

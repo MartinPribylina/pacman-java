@@ -40,6 +40,7 @@ public class GamePlay extends Game implements ActionListener{
 
         JPanel header = new JPanel();
         header.setBackground(Color.BLACK);
+        header.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         this.add(header, BorderLayout.NORTH);
         header.setPreferredSize(new Dimension(100, 50));
         header.setLayout(new BorderLayout());
@@ -59,6 +60,12 @@ public class GamePlay extends Game implements ActionListener{
         score.setVerticalAlignment(JLabel.CENTER);
         score.setHorizontalAlignment(JLabel.CENTER);
         header.add(score, BorderLayout.CENTER);
+
+        JLabel steps = ElementCreator.CreateDefaultLabel("Steps: 0");
+        header.add(steps, BorderLayout.EAST);
+
+        JLabel lives = ElementCreator.CreateDefaultLabel("Lives: 0");
+        header.add(lives, BorderLayout.WEST);
 
         MazeFileReaderResult result = MazeFileReader.ConfigureMaze(filePath, null);
         MazeConfigure mazeConfigure = result.getMazeConfigure();
@@ -92,6 +99,9 @@ public class GamePlay extends Game implements ActionListener{
         GameLogging gameLogging = new GameLogging(filePath);
 
         GameController gameController = new GameController(maze, gameLogging);
+        gameController.setLives(lives);
+        gameController.setScore(score);
+        gameController.setSteps(steps);
 
         gameLoop = new FrameBasedGameLoop(gameController);
 

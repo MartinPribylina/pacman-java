@@ -20,5 +20,7 @@ public interface CommonMazeObject extends Serializable {
     void setLastMove(CommonField.Direction direction);
 
     int animStep();
+
+    int getStepCounter();
 }
 

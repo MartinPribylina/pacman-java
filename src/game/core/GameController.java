@@ -3,9 +3,8 @@ package src.game.core;
 import src.common.CommonField;
 import src.common.CommonMaze;
 import src.common.CommonMazeObject;
-import src.game.Maze;
 import src.game.save.GameLogging;
-
+import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,6 +22,8 @@ public class GameController {
     private CommonField.Direction pacmanDirection;
     private CommonField.Direction pacmanFutureDirection;
     private GameLogging gameLogging;
+    private JLabel steps, lives, score;
+    int scoreCounter = 0;
 
     public GameController(CommonMaze _maze, GameLogging gameLogging)
     {
@@ -45,7 +46,17 @@ public class GameController {
     public void Update(){
         MovePlayer();
         MoveGhosts();
+        UpdateGameStats();
         gameLogging.frameTick();
+    }
+
+    private void UpdateGameStats() {
+        CommonMazeObject pacman = maze.pacman();
+        int pacmanLives = pacman.getLives();
+        scoreCounter += pacmanLives;
+        lives.setText("Lives: " + pacmanLives);
+        steps.setText("Steps: " + pacman.getStepCounter());
+        score.setText("Score: " + scoreCounter);
     }
 
     private void MovePlayer(){
@@ -127,5 +138,17 @@ public class GameController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void setSteps(JLabel steps) {
+        this.steps = steps;
+    }
+
+    public void setLives(JLabel lives) {
+        this.lives = lives;
+    }
+
+    public void setScore(JLabel score) {
+        this.score = score;
     }
 }

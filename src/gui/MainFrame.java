@@ -20,7 +20,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
     private final Menu menu;
 
-    private Game game;
+    private GamePlay gamePlay;
 
     private GameReplay gameReplay;
 
@@ -57,8 +57,8 @@ public class MainFrame extends JFrame implements ActionListener {
                 File selectedFile = fileChooser.getSelectedFile();
                 System.out.println("Selected file: " + selectedFile.getAbsolutePath());
                 this.remove(menu);
-                game = new Game(this, selectedFile.getAbsolutePath());
-                this.add(game);
+                gamePlay = new GamePlay(this, selectedFile.getAbsolutePath());
+                this.add(gamePlay);
                 Refresh();
             }
         }else if(e.getSource() == menu.getReplay()){
@@ -90,10 +90,10 @@ public class MainFrame extends JFrame implements ActionListener {
         }else if(e.getSource() == menu.getExit()){
             System.out.println("Exit");
             this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-        }else if(game != null && (e.getSource() == game.getMenu() || e.getSource() == game.getError())){
-            game.getGameLoop().stop();
-            this.remove(game);
-            game = null;
+        }else if(gamePlay != null && (e.getSource() == gamePlay.getMenu() || e.getSource() == gamePlay.getError())){
+            gamePlay.getGameLoop().stop();
+            this.remove(gamePlay);
+            gamePlay = null;
             this.add(menu);
             Refresh();
         }else if(gameReplay != null && e.getSource() == gameReplay.getMenu()){

@@ -116,7 +116,11 @@ public class GameController {
         LocalDateTime now = LocalDateTime.now();
         try(FileOutputStream fs = new FileOutputStream(replayPath + "\\Replay" + dtf.format(now) + ".txt")) {
             ObjectOutputStream os = new ObjectOutputStream(fs);
-            os.writeObject(gameLogging);
+            try {
+                os.writeObject(gameLogging);
+            }catch (Exception e){
+                System.out.println("Failed to save");
+            }
             os.close();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

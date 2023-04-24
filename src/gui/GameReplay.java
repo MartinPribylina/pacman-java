@@ -16,7 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.TimeUnit;
 
-public class GameReplay extends JPanel implements ActionListener{
+public class GameReplay extends Game implements ActionListener{
     private final JButton menu;
     private JButton error;
     private JButton forward;
@@ -104,13 +104,13 @@ public class GameReplay extends JPanel implements ActionListener{
             rp.setStep(-1);
             defaultPosition.setVisible(false);
             this.remove(defaultPosition);
-            presenter = new MazePresenter(maze);
+            presenter = new MazePresenter(maze, this);
             this.add(presenter);
         } else if (e.getSource() == defaultPosition.getEnd()) {
             rp.setStep(-1);
             defaultPosition.setVisible(false);
             this.remove(defaultPosition);
-            presenter = new MazePresenter(maze);
+            presenter = new MazePresenter(maze, this);
             this.add(presenter);
             rp.play(0);
         } else if (e.getSource() == backwards) {

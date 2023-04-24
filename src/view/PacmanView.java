@@ -10,6 +10,7 @@ public class PacmanView implements ComponentView, Serializable {
     private final CommonMazeObject model;
     private final FieldView parent;
 
+
     public PacmanView(FieldView parent, CommonMazeObject m) {
         this.model = m;
         this.parent = parent;

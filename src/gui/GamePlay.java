@@ -31,7 +31,6 @@ public class GamePlay extends Game implements ActionListener{
     private final ActionListener parentListener;
     private FrameBasedGameLoop gameLoop;
 
-
     public GamePlay(ActionListener parentListener, String filePath){
         this.parentListener = parentListener;
 
@@ -73,22 +72,7 @@ public class GamePlay extends Game implements ActionListener{
 
         if (result.getErrorCode() != 0 || (mazeConfigure != null && !mazeConfigure.isReadingSuccess()) || maze == null)
         {
-            JPanel errorPanel = new JPanel();
-            errorPanel.setLayout(new BoxLayout(errorPanel, BoxLayout.PAGE_AXIS));
-            errorPanel.setBackground(Color.BLACK);
-            this.add(errorPanel, BorderLayout.CENTER);
-
-            JLabel errorLabel = ElementCreator.CreateDefaultLabel("Error: " + result.getErrorMessage());
-            errorPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-            errorPanel.add(errorLabel);
-
-            JPanel wrap = new JPanel();
-            wrap.setBackground(Color.BLACK);
-            error = ElementCreator.CreateDefaultButton("OK", 100, 50, parentListener);
-            error.setAlignmentX(Component.CENTER_ALIGNMENT);
-            wrap.add(error);
-            errorPanel.add(wrap);
-
+            ShowError(result);
             return;
         }
 
@@ -122,6 +106,24 @@ public class GamePlay extends Game implements ActionListener{
         this.getActionMap().put("rightAction", gameLoop.getPlayerActions().getRightAction());
 
         gameLoop.run();
+    }
+
+    private void ShowError(MazeFileReaderResult result){
+        JPanel errorPanel = new JPanel();
+        errorPanel.setLayout(new BoxLayout(errorPanel, BoxLayout.PAGE_AXIS));
+        errorPanel.setBackground(Color.BLACK);
+        this.add(errorPanel, BorderLayout.CENTER);
+
+        JLabel errorLabel = ElementCreator.CreateDefaultLabel("Error: " + result.getErrorMessage());
+        errorPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        errorPanel.add(errorLabel);
+
+        JPanel wrap = new JPanel();
+        wrap.setBackground(Color.BLACK);
+        error = ElementCreator.CreateDefaultButton("OK", 100, 50, parentListener);
+        error.setAlignmentX(Component.CENTER_ALIGNMENT);
+        wrap.add(error);
+        errorPanel.add(wrap);
     }
 
     public void paint(Graphics g){

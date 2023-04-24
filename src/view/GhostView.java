@@ -3,9 +3,10 @@ package src.view;
 import src.common.CommonMazeObject;
 import src.common.IGhost;
 import src.common.gfx.GhostGfx;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
+
+import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 
 public class GhostView implements ComponentView {
     private final CommonMazeObject model;

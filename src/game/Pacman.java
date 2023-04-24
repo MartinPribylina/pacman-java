@@ -8,6 +8,7 @@ import src.common.Observable;
 public class Pacman extends MazeObject implements CommonMazeObject {
 
     private int lives;
+    private int stepCounter;
 
     boolean add = true;
 
@@ -55,6 +56,12 @@ public class Pacman extends MazeObject implements CommonMazeObject {
             add = !add;
         }
 
+        stepCounter++;
+
         return true;
+    }
+
+    public int getStepCounter() {
+        return stepCounter;
     }
 }

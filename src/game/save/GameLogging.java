@@ -3,8 +3,8 @@ package src.game.save;
 import src.common.CommonField;
 import src.common.CommonMaze;
 import src.common.CommonMazeObject;
-import src.game.Ghost;
-import src.game.PathField;
+import src.game.objects.Ghost;
+import src.game.objects.PathField;
 
 import java.io.*;
 import java.util.ArrayList;

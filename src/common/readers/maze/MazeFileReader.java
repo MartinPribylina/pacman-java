@@ -1,15 +1,12 @@
 package src.common.readers.maze;
 
-import src.common.CommonField;
-import src.common.CommonMazeObject;
 import src.game.MazeConfigure;
-import src.game.PathField;
+import src.game.objects.PathField;
 import src.game.save.GhostData;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Dictionary;
-import java.util.List;
 import java.util.Scanner;
 
 public class MazeFileReader {

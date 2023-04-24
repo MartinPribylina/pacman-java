@@ -1,6 +1,7 @@
 package src.gui;
 
 import src.MazePresenter;
+import src.common.CommonField;
 import src.common.CommonMaze;
 import src.common.ElementCreator;
 import src.common.readers.maze.MazeFileReader;
@@ -30,6 +31,7 @@ public class GamePlay extends Game implements ActionListener{
     private JButton error;
     private final ActionListener parentListener;
     private FrameBasedGameLoop gameLoop;
+    private GameController gameController;
 
     public GamePlay(ActionListener parentListener, String filePath){
         this.parentListener = parentListener;
@@ -82,7 +84,7 @@ public class GamePlay extends Game implements ActionListener{
 
         GameLogging gameLogging = new GameLogging(filePath);
 
-        GameController gameController = new GameController(maze, gameLogging);
+        gameController = new GameController(maze, gameLogging);
         gameController.setLives(lives);
         gameController.setScore(score);
         gameController.setSteps(steps);
@@ -180,5 +182,14 @@ public class GamePlay extends Game implements ActionListener{
                 pause.setText("Pause");
             }
         }
+    }
+
+    @Override
+    public void setPlacmanGoalDestinationClick(CommonField field) {
+        if (!field.canMove()) {
+            System.out.println("Can't move there");
+            return;
+        }
+        gameController.setPacmanGoalDestination(field);
     }
 }

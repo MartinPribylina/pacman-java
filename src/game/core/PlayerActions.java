@@ -4,8 +4,9 @@ import src.common.CommonField;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.io.Serializable;
 
-public class PlayerActions {
+public class PlayerActions implements Serializable {
 
     private final Action upAction, downAction, leftAction, rightAction;
 
@@ -24,7 +25,7 @@ public class PlayerActions {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            gameController.ChangePacmanDirection(CommonField.Direction.UP);
+            gameController.ChangePacmanDirectionKeyboardInput(CommonField.Direction.UP);
         }
     }
 
@@ -33,7 +34,7 @@ public class PlayerActions {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            gameController.ChangePacmanDirection(CommonField.Direction.DOWN);
+            gameController.ChangePacmanDirectionKeyboardInput(CommonField.Direction.DOWN);
         }
     }
 
@@ -42,7 +43,7 @@ public class PlayerActions {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            gameController.ChangePacmanDirection(CommonField.Direction.LEFT);
+            gameController.ChangePacmanDirectionKeyboardInput(CommonField.Direction.LEFT);
         }
     }
 
@@ -50,7 +51,7 @@ public class PlayerActions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            gameController.ChangePacmanDirection(CommonField.Direction.RIGHT);
+            gameController.ChangePacmanDirectionKeyboardInput(CommonField.Direction.RIGHT);
         }
     }
 

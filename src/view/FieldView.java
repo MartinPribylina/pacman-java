@@ -35,6 +35,12 @@ public class FieldView extends JPanel implements Observable.Observer  {
 
         this.addMouseListener(new MouseAdapter() {
             @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                game.setPlacmanGoalDestinationClick(model);
+            }
+
+            @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
                 if (objects.isEmpty())

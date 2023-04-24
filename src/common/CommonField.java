@@ -14,10 +14,34 @@ public interface CommonField extends Observable, Serializable {
     boolean contains(CommonMazeObject var1);
 
     enum Direction {
-        LEFT(0, -1),
-        UP(-1, 0),
-        RIGHT(0, 1),
-        DOWN(1, 0);
+        LEFT(0, -1){
+            @Override
+            public Direction Reverse(){
+                return RIGHT;
+            }
+        },
+        UP(-1, 0){
+            @Override
+            public Direction Reverse(){
+                return DOWN;
+            }
+        },
+        RIGHT(0, 1){
+            @Override
+            public Direction Reverse(){
+                return LEFT;
+            }
+        },
+        DOWN(1, 0){
+            @Override
+            public Direction Reverse(){
+                return UP;
+            }
+        };
+
+        public Direction Reverse(){
+            return null;
+        }
 
         private final int r;
         private final int c;

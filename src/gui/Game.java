@@ -1,5 +1,7 @@
 package src.gui;
 
+import src.common.CommonField;
+
 import javax.swing.*;
 
 public class Game extends JPanel implements IGame {
@@ -11,5 +13,10 @@ public class Game extends JPanel implements IGame {
 
     public void refresh(){
         repaint();
+    }
+
+    @Override
+    public void setPlacmanGoalDestinationClick(CommonField field) {
+
     }
 }

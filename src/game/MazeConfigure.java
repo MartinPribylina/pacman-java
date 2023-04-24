@@ -1,14 +1,12 @@
 package src.game;
 
 
-import src.common.CommonField;
-import src.common.CommonMazeObject;
+import src.game.objects.*;
 import src.game.save.GhostData;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.List;
 
 public class MazeConfigure implements Serializable {

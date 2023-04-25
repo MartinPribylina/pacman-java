@@ -8,7 +8,6 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class Menu extends JPanel {
-
     private JButton play;
     private JButton replay;
     private JButton stats;
@@ -22,7 +21,6 @@ public class Menu extends JPanel {
 
         SetupHeader();
         SetupButtons();
-
     }
 
     private void SetupHeader()
@@ -33,18 +31,8 @@ public class Menu extends JPanel {
         header.setPreferredSize(new Dimension(300,150));
         this.add(header, BorderLayout.NORTH);
 
-//        label.setHorizontalTextPosition(JLabel.CENTER); // Horizontal text possition
-//        label.setVerticalTextPosition(JLabel.TOP); // Vertical text position
-//        label.setIconTextGap(10); // Gap between text and image
-//
-//        label.setOpaque(true); // Set to true to show Background color
-//        label.setBackground(Color.BLACK); // Background Color
-//        label.setForeground(Color.white); // Text color
-//
         header.setVerticalAlignment(JLabel.CENTER); // Set Vertical position within label
         header.setHorizontalAlignment(JLabel.CENTER); // Set Horizontal position within label
-//
-//        label.setFont(new Font("MV Boli", Font.PLAIN, 20));
 
     }
 
@@ -70,8 +58,12 @@ public class Menu extends JPanel {
 
         middlePanel.add(Box.createRigidArea(new Dimension(0, 40)));
 
+        JPanel wrap = new JPanel();
+        wrap.setBackground(Color.BLACK);
         exit = ElementCreator.CreateDefaultButton("Exit", 150, 50, parentListener);
-        middlePanel.add(exit);
+        wrap.add(exit);
+        wrap.setBorder(BorderFactory.createEmptyBorder(0,0,50,0));
+        this.add(wrap, BorderLayout.SOUTH);
 
         this.add(middlePanel, BorderLayout.CENTER);
     }

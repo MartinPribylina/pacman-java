@@ -18,6 +18,8 @@ public class MazeConfigure implements Serializable {
     private Maze maze = null;
     private List<GhostData> ghostsData;
 
+    boolean mazeHasKey = false;
+
     public MazeConfigure()
     {
 
@@ -65,6 +67,7 @@ public class MazeConfigure implements Serializable {
                 case 'K' -> {
                     maze.setField(currentRow, col, pathField);
                     maze.setKey(currentRow, col, new Key(pathField));
+                    mazeHasKey = true;
                 }
                 case 'X' -> maze.setField(currentRow, col, new WallField(currentRow, col, maze));
                 case '.' -> maze.setField(currentRow, col, pathField);
@@ -104,6 +107,9 @@ public class MazeConfigure implements Serializable {
         makeWallRow(currentRow);
         if(currentRow == rows){
             readingSuccess = true;
+            if (!mazeHasKey){
+                maze.pacman().setHasKey(true);
+            }
             return true;
         }
         return false;

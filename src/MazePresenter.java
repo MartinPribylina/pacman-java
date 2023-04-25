@@ -4,8 +4,9 @@ import src.common.CommonMaze;
 import src.gui.GamePlay;
 import src.gui.IGame;
 import src.view.FieldView;
-import java.awt.GridLayout;
-import javax.swing.JPanel;
+
+import java.awt.*;
+import javax.swing.*;
 
 public class MazePresenter extends JPanel{
 
@@ -14,6 +15,9 @@ public class MazePresenter extends JPanel{
         int cols = maze.numCols();
         GridLayout layout = new GridLayout(rows, cols);
         this.setLayout(layout);
+        this.setBorder(BorderFactory.createLineBorder(Color.white, 2));
+
+        this.setBackground(Color.BLACK);
 
         for(int i = 0; i < rows; ++i) {
             for(int j = 0; j < cols; ++j) {

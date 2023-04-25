@@ -29,6 +29,7 @@ public class GamePlay extends Game implements ActionListener{
     private final JButton menu;
     private JButton pause;
     private JButton error;
+    private JButton playAgain;
     private final ActionListener parentListener;
     private FrameBasedGameLoop gameLoop;
     private GameController gameController;
@@ -166,21 +167,24 @@ public class GamePlay extends Game implements ActionListener{
     @Override
     public void endGame(boolean isVictory) {
 
-        JPanel errorPanel = new JPanel();
-        errorPanel.setLayout(new BoxLayout(errorPanel, BoxLayout.PAGE_AXIS));
-        errorPanel.setBackground(Color.BLACK);
-        this.add(errorPanel, BorderLayout.SOUTH);
+        JPanel endGame = new JPanel();
+        endGame.setLayout(new BoxLayout(endGame, BoxLayout.PAGE_AXIS));
+        endGame.setBackground(Color.BLACK);
+        this.add(endGame, BorderLayout.SOUTH);
 
         JLabel errorLabel = ElementCreator.CreateDefaultLabel(isVictory ? "You won!" : "You lost!");
-        errorPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        errorPanel.add(errorLabel);
+        errorLabel.setBorder(BorderFactory.createEmptyBorder(20,0,20,0));
+        errorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        errorLabel.setFont(new Font(Font.SERIF, Font.BOLD, 40));
+        endGame.add(errorLabel);
 
         JPanel wrap = new JPanel();
         wrap.setBackground(Color.BLACK);
-        error = ElementCreator.CreateDefaultButton("OK", 100, 50, parentListener);
-        error.setAlignmentX(Component.CENTER_ALIGNMENT);
-        wrap.add(error);
-        errorPanel.add(wrap);
+        playAgain = ElementCreator.CreateDefaultButton("Play Again!", 250, 50, parentListener);
+        playAgain.setAlignmentX(Component.CENTER_ALIGNMENT);
+        wrap.add(playAgain);
+        wrap.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
+        endGame.add(wrap);
     }
 
     public JButton getMenu() {
@@ -191,6 +195,10 @@ public class GamePlay extends Game implements ActionListener{
         return error;
     }
     public GameLoop getGameLoop() { return gameLoop; }
+
+    public JButton getPlayAgain() {
+        return playAgain;
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -206,7 +214,7 @@ public class GamePlay extends Game implements ActionListener{
     }
 
     @Override
-    public void setPlacmanGoalDestinationClick(CommonField field) {
+    public void setPacmanGoalDestinationClick(CommonField field) {
         if (!field.canMove()) {
             System.out.println("Can't move there");
             return;

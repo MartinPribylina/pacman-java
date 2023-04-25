@@ -18,7 +18,7 @@ public class Maze implements CommonMaze, Serializable {
 
     private final List<CommonMazeObject> ghosts;
 
-    private CommonMazeObject pacman;
+    private Pacman pacman;
 
     public Maze(int rows, int cols){
         this.cols = cols;
@@ -37,7 +37,7 @@ public class Maze implements CommonMaze, Serializable {
         if(!mazeObject.isPacman() && !ghosts.contains(mazeObject))
             ghosts.add(mazeObject);
         if(mazeObject.isPacman())
-            pacman = mazeObject;
+            pacman = (Pacman)mazeObject;
     }
 
     public void setKey(int row, int col, Key key){
@@ -63,7 +63,7 @@ public class Maze implements CommonMaze, Serializable {
     }
 
     @Override
-    public CommonMazeObject pacman() {
+    public Pacman pacman() {
         return pacman;
     }
 

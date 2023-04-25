@@ -39,7 +39,7 @@ public class FieldView extends JPanel implements Observable.Observer  {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                game.setPlacmanGoalDestinationClick(model);
+                game.setPacmanGoalDestinationClick(model);
             }
 
             @Override

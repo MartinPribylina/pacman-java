@@ -16,7 +16,7 @@ public class Game extends JPanel implements IGame {
     }
 
     @Override
-    public void setPlacmanGoalDestinationClick(CommonField field) {
+    public void setPacmanGoalDestinationClick(CommonField field) {
 
     }
 

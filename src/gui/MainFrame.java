@@ -28,6 +28,8 @@ public class MainFrame extends JFrame implements ActionListener {
 
     private Stats stats;
 
+    private File lastSelectedFile;
+
     public MainFrame(){
         FrameSetup();
 
@@ -59,6 +61,7 @@ public class MainFrame extends JFrame implements ActionListener {
             int result = fileChooser.showOpenDialog(this);
             if (result == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fileChooser.getSelectedFile();
+                lastSelectedFile = selectedFile;
                 System.out.println("Selected file: " + selectedFile.getAbsolutePath());
                 this.remove(menu);
                 gamePlay = new GamePlay(this, selectedFile.getAbsolutePath());
@@ -95,6 +98,11 @@ public class MainFrame extends JFrame implements ActionListener {
             this.remove(gamePlay);
             gamePlay = null;
             this.add(menu);
+            Refresh();
+        }else if(gamePlay != null && e.getSource() == gamePlay.getPlayAgain()){
+            this.remove(gamePlay);
+            gamePlay = new GamePlay(this, lastSelectedFile.getAbsolutePath());
+            this.add(gamePlay);
             Refresh();
         }else if(gameReplay != null && e.getSource() == gameReplay.getMenu()){
             this.remove(gameReplay);

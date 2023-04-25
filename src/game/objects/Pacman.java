@@ -14,6 +14,8 @@ public class Pacman extends MazeObject implements CommonMazeObject {
 
     private boolean hasKey;
 
+    private boolean won = false;
+
     public Pacman(CommonField field) {
         super(field);
         lives = 3;
@@ -34,6 +36,12 @@ public class Pacman extends MazeObject implements CommonMazeObject {
     @Override
     public void update(Observable observable) {
         this.field = (PathField)observable;
+
+        if (((PathField)this.field).isTarget() && hasKey)
+        {
+            won = true;
+        }
+
         if (!((PathField) observable).isEmpty()){
             Ghost ghost = new Ghost(field);
             if(((PathField) observable).contains(ghost)){
@@ -72,5 +80,9 @@ public class Pacman extends MazeObject implements CommonMazeObject {
 
     public int getStepCounter() {
         return stepCounter;
+    }
+
+    public boolean isWon() {
+        return won;
     }
 }

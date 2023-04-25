@@ -1,4 +1,4 @@
-package src.game.save;
+package src.game.replay;
 
 import src.common.CommonField;
 
@@ -11,9 +11,14 @@ public class GhostData implements Serializable {
 
     public List<CommonField.Direction> path = new ArrayList<>();
     public int type;
-    public CommonField startPos;
-    public GhostData(int type, CommonField startPos) {
+    public int startX;
+    public int startY;
+    public GhostData(int type, int startX, int startY) {
         this.type = type;
-        this.startPos = startPos;
+        this.startX = startX;
+        this.startY = startY;
+    }
+    public void setPath(List<CommonField.Direction> path) {
+        this.path = path;
     }
 }

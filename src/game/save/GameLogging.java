@@ -5,12 +5,14 @@ import src.common.CommonMaze;
 import src.common.CommonMazeObject;
 import src.game.objects.Ghost;
 import src.game.objects.PathField;
+import src.game.replay.GhostData;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class GameLogging implements Serializable {
     private String filepath;
@@ -20,28 +22,76 @@ public class GameLogging implements Serializable {
     private Dictionary<PathField, GhostData> ghostsData = new Hashtable<>();
 
     public GameLogging(String filepath){
-        this.filepath = filepath;
+        this.filepath  = filepath;
         this.time = 0;
     }
 
     public void frameTick() {
-        pacmanMove();
         ghostsMove();
         this.time++;
     }
 
-    public void pacmanMove(){
-        pacmanPath.add(maze.pacman().lastMove());
+    public void pacmanMove(CommonField.Direction dir){
+            pacmanPath.add(dir);
     }
     public void ghostsMove(){
         for (CommonMazeObject CMOGhost : maze.ghosts())
         {
             Ghost ghost = (Ghost) CMOGhost;
-
-            if (ghostsData.get(ghost.start) == null) {
-                ghostsData.put((PathField) ghost.start, new GhostData(ghost.ghostType(), ghost.start));
+            PathField startPos = (PathField) ghost.start;
+            if (ghostsData.get(startPos) == null) {
+                ghostsData.put((PathField) ghost.start, new GhostData(ghost.ghostType(), startPos.getRow(), startPos.getCol()));
             }
             ghostsData.get(ghost.start).path.add(ghost.lastMove());
+        }
+    }
+
+    public void saveIntoFile(){
+        System.out.println("Writing into file");
+        String replayPath = System.getProperty("user.dir") + "\\data\\replay";
+        try {
+            Files.createDirectories(Paths.get(replayPath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("-yyyyMMdd-HHmm");
+        LocalDateTime now = LocalDateTime.now();
+        try {
+            File file = new File(replayPath + "\\Replay" + dtf.format(now) + ".txt");
+            if (file.createNewFile()) {
+                System.out.println("File created: " + file.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+            FileWriter fileWriter = new FileWriter(file.getAbsolutePath());
+
+            File mazeFile = new File(filepath);
+            Scanner fileReader = new Scanner(mazeFile);
+            while (fileReader.hasNextLine()) {
+                fileWriter.write(fileReader.nextLine() + '\n');
+            }
+            fileReader.close();
+            fileWriter.write("*\n");
+
+            fileWriter.write(filepath + '\n');
+            fileWriter.write(String.valueOf(time) + '\n');
+            fileWriter.write(pacmanPath.toString() + '\n');
+
+            for (CommonMazeObject CMOGhost : maze.ghosts()){
+                Ghost ghost = (Ghost) CMOGhost;
+                PathField startField = (PathField) ghost.start;
+                fileWriter.write(ghost.ghostType() + ",");
+                fileWriter.write("X" + startField.getRow() + "Y" + startField.getCol() + ",");
+                fileWriter.write(ghostsData.get(startField).path.toString() + '\n');
+            }
+
+            fileWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            System.out.println("Fail in writing to file.");
+            e.printStackTrace();
         }
     }
 

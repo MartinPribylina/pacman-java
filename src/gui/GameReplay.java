@@ -1,37 +1,47 @@
 package src.gui;
 
 import src.MazePresenter;
+import src.common.CommonField;
 import src.common.CommonMaze;
 import src.common.ElementCreator;
 import src.common.readers.maze.MazeFileReader;
 import src.common.readers.maze.MazeFileReaderResult;
 import src.game.MazeConfigure;
+import src.game.replay.ReplayDetails;
 import src.game.replay.ReplayLoop;
-import src.game.save.GameLogging;
+import src.game.replay.GhostData;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.concurrent.TimeUnit;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.io.File;
 
 public class GameReplay extends Game implements ActionListener{
     private final JButton menu;
     private JButton error;
-    private JButton forward;
-    private JButton backwards;
+    private JButton stepForward;
+    private JButton stepBackwards;
     private JButton playForward;
     private JButton playBackwards;
-    private GameLogging gameLogging;
+    private File logFile;
+    private String filepath;
+    private int time;
+    private List<CommonField.Direction> pacmanPath = new ArrayList<>();
+    private List<GhostData> ghostData = new ArrayList<>();
+    private ReplayDetails replayDetails = new ReplayDetails();
     private MazePresenter presenter;
     private CommonMaze maze;
     private final ActionListener parentListener;
     private ReplayLoop rp;
     private DefaultPosition defaultPosition;
-    public GameReplay(ActionListener parentListener, GameLogging gameLogging) {
+    public GameReplay(ActionListener parentListener, File logFile) {
         this.parentListener = parentListener;
-        this.gameLogging = gameLogging;
+        this.logFile = logFile;
 
         this.setBackground(Color.BLACK);
         this.setLayout(new BorderLayout());
@@ -41,6 +51,15 @@ public class GameReplay extends Game implements ActionListener{
         this.add(header, BorderLayout.NORTH);
         header.setPreferredSize(new Dimension(100, 50));
         header.setLayout(new BorderLayout());
+
+        JLabel currentStep = ElementCreator.CreateDefaultLabel("Current step: 0");
+        currentStep.setHorizontalTextPosition(JLabel.CENTER);
+        currentStep.setVerticalAlignment(JLabel.CENTER);
+        currentStep.setHorizontalAlignment(JLabel.CENTER);
+        header.add(currentStep, BorderLayout.CENTER);
+
+        JLabel steps = ElementCreator.CreateDefaultLabel("Steps: 0");
+        header.add(steps, BorderLayout.EAST);
 
         JPanel sideBar = new JPanel();
         sideBar.setBackground(Color.BLACK);
@@ -52,26 +71,46 @@ public class GameReplay extends Game implements ActionListener{
 
         menu = ElementCreator.CreateDefaultButton("Menu", 100, 50, parentListener);
         sideBar.add(menu, BorderLayout.PAGE_START);
-        forward = ElementCreator.CreateButton(">", 45, 30, this);
-        backwards = ElementCreator.CreateButton("<", 45, 30, this);
+        stepForward = ElementCreator.CreateButton(">", 45, 30, this);
+        stepBackwards = ElementCreator.CreateButton("<", 45, 30, this);
         playForward = ElementCreator.CreateDefaultButton("\u00BB", 45, 30, this);
         playBackwards = ElementCreator.CreateDefaultButton("\u00AB", 45, 30, this);
 
-        sideBar.add(backwards, BorderLayout.WEST);
-        sideBar.add(forward, BorderLayout.WEST);
+        sideBar.add(stepBackwards, BorderLayout.WEST);
+        sideBar.add(stepForward, BorderLayout.WEST);
         sideBar.add(playBackwards, BorderLayout.WEST);
         sideBar.add(playForward, BorderLayout.WEST);
 
-        JLabel score = ElementCreator.CreateDefaultLabel("Score: 0");
-        score.setHorizontalTextPosition(JLabel.CENTER); // Horizontal text possition
-        score.setVerticalAlignment(JLabel.CENTER);
-        score.setHorizontalAlignment(JLabel.CENTER);
-        header.add(score, BorderLayout.CENTER);
+        try {
+            Scanner myReader = new Scanner(logFile);
+            while (!myReader.nextLine().equals("*")) {}
+            filepath = myReader.nextLine();
+            time = Integer.valueOf(myReader.nextLine());
 
-        MazeFileReaderResult result = MazeFileReader.ConfigureMaze(gameLogging.getFilepath(), gameLogging.getGhostsData());
+            pacmanPath = getPath(myReader.nextLine());
+
+            while (myReader.hasNextLine()){
+                String line = myReader.nextLine();
+                int type = Integer.valueOf(String.valueOf(line.charAt(0)));
+                int row = Integer.valueOf(String.valueOf(line.charAt(3)));
+                int col = Integer.valueOf(String.valueOf(line.charAt(5)));
+
+                GhostData ghost = new GhostData(type, row, col);
+                ghost.setPath(getPath(line.substring(line.indexOf('['))));
+                ghostData.add(ghost);
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        MazeFileReaderResult result = MazeFileReader.ConfigureMaze(filepath, ghostData);
         MazeConfigure mazeConfigure = result.getMazeConfigure();
         maze = mazeConfigure.createMaze();
-        gameLogging.setMaze(maze);
+
+        replayDetails.setMaze(maze);
+        replayDetails.setTime(time);
+        replayDetails.setPacmanPath(pacmanPath);
+        replayDetails.setGhostData(ghostData);
 
         if (maze == null)
         {
@@ -95,7 +134,13 @@ public class GameReplay extends Game implements ActionListener{
         this.add(defaultPosition, BorderLayout.CENTER);
         setVisible(true);
 
-        rp = new ReplayLoop(gameLogging);
+        steps.setText("Steps: " + time);
+        rp = new ReplayLoop(replayDetails);
+        rp.setCurrentStep(currentStep);
+        rp.setBackwards(stepBackwards);
+        rp.setForward(stepForward);
+        rp.setPlayForward(playForward);
+        rp.setPlayBackwards(playBackwards);
         rp.run();
     }
     @Override
@@ -112,24 +157,66 @@ public class GameReplay extends Game implements ActionListener{
             this.remove(defaultPosition);
             presenter = new MazePresenter(maze, this);
             this.add(presenter);
-            rp.play(0);
-        } else if (e.getSource() == backwards) {
+            rp.jumpToEnd();
+        } else if (e.getSource() == stepBackwards) {
             rp.back = true;
             synchronized(rp) {
                 rp.notify();
             }
-        } else if (e.getSource() == forward) {
+        } else if (e.getSource() == stepForward) {
             rp.back = false;
             synchronized(rp) {
                 rp.notify();
             }
         } else if (e.getSource() == playForward) {
             rp.back = false;
-            rp.play(300);
+            rp.forward = true;
+            synchronized(rp) {
+                rp.notify();
+            }
+            stepBackwards.setEnabled(false);
+            stepForward.setEnabled(false);
+            playBackwards.setEnabled(false);
         } else if (e.getSource() == playBackwards) {
             rp.back = true;
-            rp.play(300);
+            rp.backwards = true;
+            synchronized(rp) {
+                rp.notify();
+            }
+            stepBackwards.setEnabled(false);
+            stepForward.setEnabled(false);
+            playForward.setEnabled(false);
         }
+    }
+    public List<CommonField.Direction> getPath(String line){
+        List<CommonField.Direction> path = new ArrayList<>();
+        for (int i = 0; i<line.length(); i++){
+            if (line.charAt(i) == ' ' || line.charAt(i) == '['){
+                switch (line.charAt(i+1)){
+                    case 'n' -> {
+                        path.add(null);
+                        if (line.charAt(i+5) != '\0') i+=5;
+                    }
+                    case 'U' -> {
+                        path.add(CommonField.Direction.UP);
+                        if (line.charAt(i+3) != '\0') i+=3;
+                    }
+                    case 'D' -> {
+                        path.add(CommonField.Direction.DOWN);
+                        if (line.charAt(i+5) != '\0') i+=5;
+                    }
+                    case 'L' -> {
+                        path.add(CommonField.Direction.LEFT);
+                        if (line.charAt(i+5) != '\0')i+=5;
+                    }
+                    case 'R' -> {
+                        path.add(CommonField.Direction.RIGHT);
+                        if (line.charAt(i+6) != '\0') i+=6;
+                    }
+                }
+            }
+        }
+        return path;
     }
     public JButton getMenu() {
         return menu;

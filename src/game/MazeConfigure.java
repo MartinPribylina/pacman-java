@@ -2,7 +2,7 @@ package src.game;
 
 
 import src.game.objects.*;
-import src.game.save.GhostData;
+import src.game.replay.GhostData;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,13 +16,13 @@ public class MazeConfigure implements Serializable {
     private boolean readingSuccess, error;
 
     private Maze maze = null;
-    private Dictionary<PathField, GhostData> ghostsData;
+    private List<GhostData> ghostsData;
 
     public MazeConfigure()
     {
 
     }
-    public MazeConfigure(Dictionary<PathField, GhostData> ghostsData)
+    public MazeConfigure(List<GhostData> ghostsData)
     {
         this.ghostsData = ghostsData;
     }
@@ -58,6 +58,14 @@ public class MazeConfigure implements Serializable {
             PathField pathField = new PathField(currentRow, col, maze);
 
             switch (c) {
+                case 'T' -> {
+                    pathField.setTarget(true);
+                    maze.setField(currentRow, col, pathField);
+                }
+                case 'K' -> {
+                    maze.setField(currentRow, col, pathField);
+                    maze.setKey(currentRow, col, new Key(pathField));
+                }
                 case 'X' -> maze.setField(currentRow, col, new WallField(currentRow, col, maze));
                 case '.' -> maze.setField(currentRow, col, pathField);
                 case 'S' -> {
@@ -70,15 +78,16 @@ public class MazeConfigure implements Serializable {
                     if (ghostsData == null) {
                         maze.setMazeObject(currentRow, col, new Ghost(pathField));
                     }else {
-                        List<PathField> fields = new ArrayList<>();
-                        ghostsData.keys().asIterator().forEachRemaining((field ->
-                                fields.add(field)));
-                        GhostData ghost = null;
-                        for (int j = 0; j < fields.size(); j++){
-                            if(pathField.equals(fields.get(j)))
-                                ghost = ghostsData.get(fields.get(j));
+                        for (GhostData ghost : ghostsData){
+                            int x = pathField.getRow();
+                            int y = pathField.getCol();
+                            if (ghost.startX == x && ghost.startY == y)
+                            {
+                                maze.setMazeObject(currentRow, col, new Ghost(pathField, ghost.type, ghost.path));
+                                System.out.println(ghost);
+                                break;
+                            }
                         }
-                        maze.setMazeObject(currentRow, col, new Ghost(pathField, ghost.type, ghost.path));
                     }
                 }
                 default -> {

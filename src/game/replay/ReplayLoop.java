@@ -5,38 +5,36 @@ import src.common.CommonMaze;
 import src.common.CommonMazeObject;
 import src.game.objects.Ghost;
 import src.game.objects.MazeObject;
-import src.game.save.GameLogging;
 
+import javax.swing.*;
 import java.util.List;
 
 import static src.common.CommonField.Direction.*;
 
 public class ReplayLoop {
+    private JLabel steps, currentStep;
+    private JButton stepForward, stepBackwards, playForward, playBackwards;
     private Thread replayThread;
-    private GameLogging gameLogging;
+    private ReplayDetails replayDetails;
     public int step;
     public boolean back = false;
-    public ReplayLoop(GameLogging gameLogging){
-        this.gameLogging = gameLogging;
+    public boolean forward = false, backwards = false;
+    public ReplayLoop(ReplayDetails replayDetails){
+        this.replayDetails = replayDetails;
     }
     public void run() {
         replayThread = new Thread(this::processReplayLoop);
         replayThread.start();
     }
-    public void play(int delay) {
+    public void jumpToEnd() {
         replayThread.stop();
-        CommonMaze maze = gameLogging.getMaze();
+        CommonMaze maze = replayDetails.getMaze();
         if(step == -1) step++;
         if (!back){
-            for (;step < gameLogging.getTime(); step++){
+            for (;step < replayDetails.getTime(); step++){
                 movePacman(maze, step);
                 for (CommonMazeObject ghostCommon : maze.ghosts()) {
                     moveGhost(ghostCommon, step);
-                }
-                try {
-                    Thread.sleep(delay);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
                 }
                 System.out.println(step);
             }
@@ -46,26 +44,25 @@ public class ReplayLoop {
                 for (CommonMazeObject ghostCommon : maze.ghosts()) {
                     moveGhost(ghostCommon, step);
                 }
-                try {
-                    Thread.sleep(delay);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
                 System.out.println(step);
             }
         }
 
-        if(step > gameLogging.getTime()-1) step--;
+        if(step > replayDetails.getTime()-1) step--;
         replayThread = new Thread(this::processReplayLoop);
         replayThread.start();
     }
 
     protected void processReplayLoop(){
-        CommonMaze maze = gameLogging.getMaze();
+        CommonMaze maze = replayDetails.getMaze();
         while (true){
             synchronized (this){
                 try{
-                    this.wait();
+                    if (forward || backwards) {
+                        this.wait(200);
+                    }else {
+                        this.wait();
+                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -74,13 +71,24 @@ public class ReplayLoop {
                 step++;
             }
 
-            if (!back && step > gameLogging.getTime() - 1){
+            if (!back && step > replayDetails.getTime() - 1){
                 step--;
+                forward = false;
+                stepBackwards.setEnabled(true);
+                stepForward.setEnabled(true);
+                playBackwards.setEnabled(true);
+                playForward.setEnabled(true);
                 continue;
             }
 
-            if(step < 0)
+            if(step < 0){
+                backwards = false;
+                stepBackwards.setEnabled(true);
+                stepForward.setEnabled(true);
+                playBackwards.setEnabled(true);
+                playForward.setEnabled(true);
                 continue;
+            }
 
 
             movePacman(maze, step);
@@ -88,50 +96,72 @@ public class ReplayLoop {
                 moveGhost(ghostCommon, step);
             }
             if (back) step--;
+            UpdateGameStats();
             System.out.println(step);
         }
     }
     public void movePacman(CommonMaze maze, int i) {
 
         MazeObject pacman = (MazeObject) maze.pacman();
-        List<CommonField.Direction> pacmanDirection = gameLogging.getPacmanPath();
+        List<CommonField.Direction> pacmanPath = replayDetails.getPacmanPath();
         CommonField.Direction dir = null;
-        if (pacmanDirection.get(i) != null && !back) {
-            dir = pacmanDirection.get(i);
+        if (pacmanPath.get(i) != null && !back) {
+            dir = pacmanPath.get(i);
             pacman.move(dir);
-        }else if (pacmanDirection.get(i) != null && back) {
-            switch (pacmanDirection.get(i)){
+        }else if (pacmanPath.get(i) != null && back) {
+            switch (pacmanPath.get(i)){
                 case UP -> dir = DOWN;
                 case DOWN -> dir = UP;
                 case LEFT -> dir = RIGHT;
                 case RIGHT -> dir = LEFT;
             }
             pacman.move(dir);
-            pacman.setLastMove(pacmanDirection.get(i));
+            pacman.setLastMove(pacmanPath.get(i));
         }
     }
     public void moveGhost(CommonMazeObject CMOghost, int i) {
             MazeObject ghost = (MazeObject) CMOghost;
             CommonField.Direction dir = null;
-            List<CommonField.Direction> ghostDirection = ((Ghost) ghost).getGhostDirections();
-            //System.out.println(ghostDirection);
-            if (ghostDirection.get(i) != null && !back){
-                dir = ghostDirection.get(i);
+            List<CommonField.Direction> ghostPath = ((Ghost) ghost).getGhostPath();
+            if (ghostPath.get(i) != null && !back){
+                dir = ghostPath.get(i);
                 ghost.move(dir);
-            }else if (ghostDirection.get(i) != null && back){
-                switch (ghostDirection.get(i)){
+            }else if (ghostPath.get(i) != null && back){
+                switch (ghostPath.get(i)){
                     case UP -> dir = DOWN;
                     case DOWN -> dir = UP;
                     case LEFT -> dir = RIGHT;
                     case RIGHT -> dir = LEFT;
                 }
                 ghost.move(dir);
-                ghost.setLastMove(ghostDirection.get(i));
+                ghost.setLastMove(ghostPath.get(i));
             }
-            //System.out.println(dir);
+    }
+
+    private void UpdateGameStats() {
+        currentStep.setText("Current step: " + Integer.valueOf(step+1));
     }
 
     public void setStep(int step) {
         this.step = step;
+    }
+    public void setCurrentStep(JLabel currentStep) {
+        this.currentStep = currentStep;
+    }
+
+    public void setForward(JButton stepForward) {
+        this.stepForward = stepForward;
+    }
+
+    public void setBackwards(JButton stepBackwards) {
+        this.stepBackwards = stepBackwards;
+    }
+
+    public void setPlayForward(JButton playForward) {
+        this.playForward = playForward;
+    }
+
+    public void setPlayBackwards(JButton playBackwards) {
+        this.playBackwards = playBackwards;
     }
 }

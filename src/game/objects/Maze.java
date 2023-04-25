@@ -38,7 +38,10 @@ public class Maze implements CommonMaze, Serializable {
             ghosts.add(mazeObject);
         if(mazeObject.isPacman())
             pacman = mazeObject;
+    }
 
+    public void setKey(int row, int col, Key key){
+        fields[row][col].addObserver(key);
     }
 
     @Override

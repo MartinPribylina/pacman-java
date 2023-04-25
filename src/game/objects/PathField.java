@@ -12,6 +12,8 @@ import java.util.List;
 public class PathField extends AbstractObservableField implements CommonField {
     private final int row;
     private final int col;
+
+    private boolean target = false;
     public PathField(int row, int col, Maze maze)
     {
         this.row = row;
@@ -38,6 +40,18 @@ public class PathField extends AbstractObservableField implements CommonField {
             if(observer instanceof CommonMazeObject)
             {
                 return (CommonMazeObject) observer;
+            }
+        }
+        return null;
+    }
+
+    public Pacman getPacman() {
+
+        for (Observer observer :
+                observers) {
+            if(observer instanceof Pacman)
+            {
+                return (Pacman) observer;
             }
         }
         return null;
@@ -85,9 +99,17 @@ public class PathField extends AbstractObservableField implements CommonField {
 
     @Override
     public void notifyObservers() {
-        for (Observer observer : observers) {
-            if (observer != null)
-                observer.update(this);
+        for (int i = 0; i < observers.size(); i++){
+            if (observers.get(i) != null)
+                observers.get(i).update(this);
         }
+    }
+
+    public void setTarget(boolean target) {
+        this.target = target;
+    }
+
+    public boolean isTarget() {
+        return target;
     }
 }

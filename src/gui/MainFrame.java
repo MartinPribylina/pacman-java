@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
-import java.io.*;
+import java.io.File;
 
 public class MainFrame extends JFrame implements ActionListener {
 
@@ -72,23 +72,10 @@ public class MainFrame extends JFrame implements ActionListener {
             int result = fileChooser.showOpenDialog(this);
             if (result == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fileChooser.getSelectedFile();
-                try(FileInputStream fi = new FileInputStream(selectedFile.getAbsolutePath())) {
-                    ObjectInputStream oi = new ObjectInputStream(fi);
-                    GameLogging gameLogging = (GameLogging) oi.readObject();
-                    oi.close();
-                    System.out.println(gameLogging.getTime());
-                    System.out.println(gameLogging.getMaze());
-                    this.remove(menu);
-                    gameReplay = new GameReplay(this, gameLogging);
-                    this.add(gameReplay);
-                    Refresh();
-                } catch (FileNotFoundException ex){
-                    ex.printStackTrace();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                } catch (ClassNotFoundException ex) {
-                    throw new RuntimeException(ex);
-                }
+                this.remove(menu);
+                gameReplay = new GameReplay(this, selectedFile);
+                this.add(gameReplay);
+                Refresh();
             }
 
         } else if (e.getSource() == menu.getStats()) {

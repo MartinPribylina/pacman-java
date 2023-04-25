@@ -10,14 +10,25 @@ public class MazeObjectDescriptionBuilder {
 
     public MazeObjectDescriptionBuilder(){
         mazeObjectDescription = new MazeObjectDescription();
+    }
 
+    public MazeObjectDescriptionBuilder pacman(){
         mazeObjectDescription.title = Lore.pacmanName;
         mazeObjectDescription.description = Lore.pacmanDescription;
+
+        return this;
     }
 
     public MazeObjectDescriptionBuilder ghostType(int ghostType){
         mazeObjectDescription.title = Lore.ghostNames[ghostType];
         mazeObjectDescription.description = Lore.ghostDescriptions[ghostType];
+
+        return this;
+    }
+
+    public MazeObjectDescriptionBuilder key(){
+        mazeObjectDescription.title = Lore.keyName;
+        mazeObjectDescription.description = Lore.keyDescription;
 
         return this;
     }

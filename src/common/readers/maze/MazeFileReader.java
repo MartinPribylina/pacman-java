@@ -26,6 +26,8 @@ public class MazeFileReader {
         try {
             File myObj = new File(filePath);
             Scanner myReader = new Scanner(myObj);
+            //Skip line, needs rework to read columns and rows
+            myReader.nextLine();
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 if(firstLine)
@@ -49,6 +51,7 @@ public class MazeFileReader {
             mazeConfigure.startReading(rowsCount, colsCount);
 
             myReader = new Scanner(myObj);
+            myReader.nextLine();
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 System.out.println(data);

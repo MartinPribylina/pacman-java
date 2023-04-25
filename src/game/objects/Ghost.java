@@ -74,6 +74,11 @@ public class Ghost extends MazeObject implements CommonMazeObject, IGhost {
         return ghostType;
     }
 
+    @Override
+    public boolean isGhost() {
+        return true;
+    }
+
     public List<CommonField.Direction> getGhostPath() {
         return ghostPath;
     }

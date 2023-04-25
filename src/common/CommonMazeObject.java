@@ -11,6 +11,14 @@ public interface CommonMazeObject extends Serializable {
         return false;
     }
 
+    default boolean isGhost() {
+        return false;
+    }
+
+    default boolean isKey() {
+        return false;
+    }
+
     CommonField getField();
 
     int getLives();

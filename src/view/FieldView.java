@@ -4,7 +4,9 @@ import src.common.CommonField;
 import src.common.CommonMazeObject;
 import src.common.IGhost;
 import src.common.Observable;
+import src.common.gfx.MiscGfx;
 import src.common.lore.MazeObjectDescriptionBuilder;
+import src.game.objects.PathField;
 import src.gui.IGame;
 
 import javax.swing.*;
@@ -62,9 +64,13 @@ public class FieldView extends JPanel implements Observable.Observer  {
                 MazeObjectDescriptionBuilder builder = new MazeObjectDescriptionBuilder();
                 builder = builder.setDimension(new Dimension(150, 200));
                 builder = builder.setPosition(getX() + diameter + 100,thisReference.getY() + diameter + 50);
-                if (!o.isPacman())
+                if (o.isPacman()){
+                    builder = builder.pacman();
+                } else if (o.isGhost())
                 {
                     builder = builder.ghostType(((IGhost)o).ghostType());
+                } else if (o.isKey()) {
+                    builder = builder.key();
                 }
                 game.setObjectDescription(builder.build());
                 game.refresh();
@@ -80,6 +86,23 @@ public class FieldView extends JPanel implements Observable.Observer  {
         });
     }
 
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        if (this.model.canMove()){
+            if (!((PathField)this.model).isTarget())
+                return;
+            Graphics2D g2 = (Graphics2D)g;
+            Rectangle bounds = this.getBounds();
+            double w = bounds.getWidth();
+            double h = bounds.getHeight();
+            double diameter = Math.min(h, w) - Math.min(h, w) / 100 * 10;
+            double x = (w - diameter) / 2.0;
+            double y = (h - diameter) / 2.0;
+            g2.drawImage(MiscGfx.GetTarget((int)diameter), (int) x, (int)y, null);
+        }
+    }
+
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (int i = 0; i < this.objects.size(); i++){
@@ -93,7 +116,15 @@ public class FieldView extends JPanel implements Observable.Observer  {
             this.objects.clear();
             if (!this.model.isEmpty()) {
                 CommonMazeObject o = this.model.get();
-                ComponentView v = o.isPacman() ? new PacmanView(this, this.model.get()) : new GhostView(this, this.model.get());
+                ComponentView v = null;
+                if (o.isPacman()){
+                    v = new PacmanView(this, this.model.get());
+                }else if (o.isGhost()){
+                    v = new GhostView(this, this.model.get());
+                }else if (o.isKey()){
+                    v = new KeyView(this, this.model.get());
+                }
+
                 this.objects.add(v);
             }
 

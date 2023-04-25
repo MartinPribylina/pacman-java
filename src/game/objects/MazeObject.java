@@ -54,4 +54,19 @@ public abstract class MazeObject implements CommonMazeObject, Observable.Observe
     public int animStep(){
         return animStep;
     }
+
+    @Override
+    public boolean isPacman() {
+        return false;
+    }
+
+    @Override
+    public boolean isGhost() {
+        return false;
+    }
+
+    @Override
+    public int getStepCounter() {
+        return 0;
+    }
 }

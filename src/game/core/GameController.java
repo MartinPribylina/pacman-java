@@ -77,17 +77,17 @@ public class GameController implements Serializable {
 
         if (pacman.getLives() <= 0){
             endGame = true;
-            game.endGame(false);
         }
 
-        if (pacman.isHasKey()){
+        if (pacman.isWon()){
             endGame = true;
             isVictory = true;
         }
 
         if (endGame){
+            game.endGame(isVictory);
             gameLoop.stop();
-            game.endGame(true);
+
 
             StatsData stats = StatsSaveManager.LoadStats();
             stats.livesLost += 3 - pacman.getLives();

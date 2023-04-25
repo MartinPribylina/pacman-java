@@ -16,4 +16,7 @@ public class Lore {
 
     public static String pacmanDescription = "Prehistoric WARRIOR named Pacman. Pacman came from previous name Puck-man which means Man Fearless as a Puck!";
     public static String pacmanName = "PACMAN";
+
+    public static String keyDescription = "Key that unlocks path to VICTORY!!!";
+    public static String keyName = "KEYYY";
 }

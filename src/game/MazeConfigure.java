@@ -58,6 +58,14 @@ public class MazeConfigure implements Serializable {
             PathField pathField = new PathField(currentRow, col, maze);
 
             switch (c) {
+                case 'T' -> {
+                    pathField.setTarget(true);
+                    maze.setField(currentRow, col, pathField);
+                }
+                case 'K' -> {
+                    maze.setField(currentRow, col, pathField);
+                    maze.setKey(currentRow, col, new Key(pathField));
+                }
                 case 'X' -> maze.setField(currentRow, col, new WallField(currentRow, col, maze));
                 case '.' -> maze.setField(currentRow, col, pathField);
                 case 'S' -> {

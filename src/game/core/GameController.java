@@ -6,7 +6,11 @@ import src.common.CommonMazeObject;
 import src.game.objects.Pacman;
 import src.game.objects.PathField;
 import src.game.save.GameLogging;
-import src.game.utility.LogicHelper;
+import src.game.save.StatsData;
+import src.game.save.StatsSaveManager;
+import src.game.utility.GameLogicHelper;
+import src.gui.Game;
+import src.gui.IGame;
 
 import javax.swing.*;
 import java.io.*;
@@ -16,7 +20,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class GameController implements Serializable {
 
@@ -24,12 +27,15 @@ public class GameController implements Serializable {
     private CommonField.Direction pacmanDirection;
     private CommonField.Direction pacmanFutureDirection;
     private GameLogging gameLogging;
+    private GameLoop gameLoop;
+    private IGame game;
     private JLabel steps, lives, score;
     int scoreCounter = 0;
     private CommonField pacmanGoalDestination;
 
-    public GameController(CommonMaze _maze, GameLogging gameLogging)
+    public GameController(CommonMaze _maze, GameLogging gameLogging, IGame game)
     {
+        this.game = game;
         maze = _maze;
         this.gameLogging = gameLogging;
         gameLogging.setMaze(_maze);
@@ -54,74 +60,48 @@ public class GameController implements Serializable {
         pacmanGoalDestination = field;
     }
 
-    public List<CommonField.Direction> FindShortestPath(){
-        if (pacmanGoalDestination == null)
-            return null;
-        if (!pacmanGoalDestination.canMove())
-            return null;
-
-        Pacman pacman = (Pacman)maze.pacman();
-        PathField pacmanField = (PathField)pacman.getField();
-
-        PathField goalField = (PathField) pacmanGoalDestination;
-        PathField currentField = (PathField) pacmanField;
-
-        if (pacmanGoalDestination == currentField)
-            return null;
-
-        List<List<CommonField.Direction>> paths = new ArrayList<>();
-
-        for (CommonField.Direction dir : CommonField.Direction.values()) {
-            CommonField nextField = currentField.nextField(dir);
-            if (nextField == null || !nextField.canMove()){
-                continue;
-            }
-            List<CommonField.Direction> path = new ArrayList<>();
-            path.add(dir);
-            if (nextField == goalField) {
-                return path;
-            }
-            paths.add(path);
-        }
-
-        while (true) {
-
-            List<List<CommonField.Direction>> newPaths = new ArrayList<>();
-
-            for (int i = 0; i < paths.size(); i++) {
-
-                for (CommonField.Direction dir : CommonField.Direction.values()) {
-                    var path = paths.get(i);
-                    currentField = pacmanField;
-                    for(int j = 0; j < path.size(); j++){
-                        currentField = (PathField) currentField.nextField(path.get(j));
-                    }
-                    CommonField nextField = currentField.nextField(dir);
-
-                    if (nextField == null || !nextField.canMove() || path.get(path.size() - 1).Reverse() == dir) {
-                        continue;
-                    }
-                    var newPath = new ArrayList<>(path);
-                    newPath.add(dir);
-
-                    if (nextField == goalField) {
-                        return newPath;
-                    }
-
-                    if (!newPaths.contains(newPath))
-                        newPaths.add(newPath);
-                }
-            }
-
-            paths = newPaths;
-        }
-    }
-
     public void Update(){
         MovePlayer();
         MoveGhosts();
         UpdateGameStats();
+        CheckGameEnd();
         gameLogging.frameTick();
+    }
+
+    private void CheckGameEnd(){
+        Pacman pacman = (Pacman) maze.pacman();
+
+        boolean endGame = false;
+        boolean isVictory = false;
+
+        if (pacman.getLives() <= 0){
+            endGame = true;
+            game.endGame(false);
+        }
+
+        if (pacman.isHasKey()){
+            endGame = true;
+            isVictory = true;
+        }
+
+        if (endGame){
+            gameLoop.stop();
+            game.endGame(true);
+
+            StatsData stats = StatsSaveManager.LoadStats();
+            stats.livesLost += 3 - pacman.getLives();
+            stats.stepsTaken += pacman.getStepCounter();
+            stats.timesPlayed++;
+            if (isVictory){
+                stats.timesWon++;
+            }
+            if (stats.maxScore < scoreCounter)
+            {
+                stats.maxScore = scoreCounter;
+            }
+
+            StatsSaveManager.SaveStats(stats);
+        }
     }
 
     private void UpdateGameStats() {
@@ -135,10 +115,10 @@ public class GameController implements Serializable {
 
     private void MovePlayer(){
         if (pacmanGoalDestination != null) {
-            var shortestPath = FindShortestPath();
+            var shortestPath = GameLogicHelper.FindShortestPath(maze.pacman().getField(), pacmanGoalDestination);
             if (shortestPath != null)
             {
-                CommonField.Direction next = FindShortestPath().get(0);
+                CommonField.Direction next = shortestPath.get(0);
                 if (next != null)
                     ChangePacmanDirection(next);
             }else{
@@ -165,7 +145,7 @@ public class GameController implements Serializable {
             {
                 ghost.move(ghost.lastMove());
             }else{
-                ghost.move(LogicHelper.RandomDirection(ghost));
+                ghost.move(GameLogicHelper.RandomDirection(ghost));
             }
         }
     }
@@ -209,5 +189,9 @@ public class GameController implements Serializable {
 
     public void setScore(JLabel score) {
         this.score = score;
+    }
+
+    public void setGameLoop(GameLoop gameLoop) {
+        this.gameLoop = gameLoop;
     }
 }

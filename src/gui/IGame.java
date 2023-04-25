@@ -6,4 +6,5 @@ public interface IGame {
     void setObjectDescription(MazeObjectDescription objectDescription);
     void refresh();
     void setPlacmanGoalDestinationClick(CommonField field);
+    void endGame(boolean isVictory);
 }

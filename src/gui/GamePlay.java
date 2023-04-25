@@ -32,6 +32,7 @@ public class GamePlay extends Game implements ActionListener{
     private final ActionListener parentListener;
     private FrameBasedGameLoop gameLoop;
     private GameController gameController;
+    private MazePresenter presenter;
 
     public GamePlay(ActionListener parentListener, String filePath){
         this.parentListener = parentListener;
@@ -79,12 +80,12 @@ public class GamePlay extends Game implements ActionListener{
         }
 
 
-        MazePresenter presenter = new MazePresenter(maze, this);
+        presenter = new MazePresenter(maze, this);
         this.add(presenter, BorderLayout.CENTER);
 
         GameLogging gameLogging = new GameLogging(filePath);
 
-        gameController = new GameController(maze, gameLogging);
+        gameController = new GameController(maze, gameLogging, this);
         gameController.setLives(lives);
         gameController.setScore(score);
         gameController.setSteps(steps);
@@ -160,6 +161,26 @@ public class GamePlay extends Game implements ActionListener{
         }
 
 
+    }
+
+    @Override
+    public void endGame(boolean isVictory) {
+
+        JPanel errorPanel = new JPanel();
+        errorPanel.setLayout(new BoxLayout(errorPanel, BoxLayout.PAGE_AXIS));
+        errorPanel.setBackground(Color.BLACK);
+        this.add(errorPanel, BorderLayout.SOUTH);
+
+        JLabel errorLabel = ElementCreator.CreateDefaultLabel(isVictory ? "You won!" : "You lost!");
+        errorPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        errorPanel.add(errorLabel);
+
+        JPanel wrap = new JPanel();
+        wrap.setBackground(Color.BLACK);
+        error = ElementCreator.CreateDefaultButton("OK", 100, 50, parentListener);
+        error.setAlignmentX(Component.CENTER_ALIGNMENT);
+        wrap.add(error);
+        errorPanel.add(wrap);
     }
 
     public JButton getMenu() {

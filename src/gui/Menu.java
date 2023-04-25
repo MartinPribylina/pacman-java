@@ -11,6 +11,7 @@ public class Menu extends JPanel {
 
     private JButton play;
     private JButton replay;
+    private JButton stats;
     private JButton exit;
     private final ActionListener parentListener;
     public Menu(ActionListener parentListener){
@@ -64,6 +65,11 @@ public class Menu extends JPanel {
 
         middlePanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
+        stats = ElementCreator.CreateDefaultButton("Stats", 150, 50, parentListener);
+        middlePanel.add(stats);
+
+        middlePanel.add(Box.createRigidArea(new Dimension(0, 40)));
+
         exit = ElementCreator.CreateDefaultButton("Exit", 150, 50, parentListener);
         middlePanel.add(exit);
 
@@ -76,6 +82,10 @@ public class Menu extends JPanel {
 
     public JButton getReplay() {
         return replay;
+    }
+
+    public JButton getStats() {
+        return stats;
     }
 
     public JButton getExit() {

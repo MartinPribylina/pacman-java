@@ -1,6 +1,8 @@
 package src.gui;
 
 import src.game.save.GameLogging;
+import src.game.save.StatsData;
+import src.game.save.StatsSaveManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,6 +25,8 @@ public class MainFrame extends JFrame implements ActionListener {
     private GamePlay gamePlay;
 
     private GameReplay gameReplay;
+
+    private Stats stats;
 
     public MainFrame(){
         FrameSetup();
@@ -87,7 +91,16 @@ public class MainFrame extends JFrame implements ActionListener {
                 }
             }
 
-        }else if(e.getSource() == menu.getExit()){
+        } else if (e.getSource() == menu.getStats()) {
+            stats = new Stats(this);
+            this.remove(menu);
+            this.add(stats);
+            Refresh();
+        } else if (stats != null && e.getSource() == stats.getBack()) {
+            this.remove(stats);
+            this.add(menu);
+            Refresh();
+        } else if(e.getSource() == menu.getExit()){
             System.out.println("Exit");
             this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         }else if(gamePlay != null && (e.getSource() == gamePlay.getMenu() || e.getSource() == gamePlay.getError())){

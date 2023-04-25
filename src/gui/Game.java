@@ -19,4 +19,9 @@ public class Game extends JPanel implements IGame {
     public void setPlacmanGoalDestinationClick(CommonField field) {
 
     }
+
+    @Override
+    public void endGame(boolean isVictory) {
+
+    }
 }

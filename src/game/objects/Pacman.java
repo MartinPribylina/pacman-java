@@ -12,6 +12,7 @@ public class Pacman extends MazeObject implements CommonMazeObject {
 
     boolean add = true;
 
+    private boolean hasKey;
 
     public Pacman(CommonField field) {
         super(field);
@@ -59,6 +60,14 @@ public class Pacman extends MazeObject implements CommonMazeObject {
         stepCounter++;
 
         return true;
+    }
+
+    public boolean isHasKey() {
+        return hasKey;
+    }
+
+    public void setHasKey(boolean hasKey) {
+        this.hasKey = hasKey;
     }
 
     public int getStepCounter() {

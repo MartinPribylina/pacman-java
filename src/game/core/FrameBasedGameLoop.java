@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class FrameBasedGameLoop extends GameLoop implements Serializable {
     public FrameBasedGameLoop(GameController _controller) {
         super(_controller);
+        _controller.setGameLoop(this);
     }
 
     @Override

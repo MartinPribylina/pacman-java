@@ -28,6 +28,7 @@ public class GameReplay extends Game implements ActionListener{
     private JButton stepBackwards;
     private JButton playForward;
     private JButton playBackwards;
+    private JButton playPause;
     private File logFile;
     private String filepath;
     private int time;
@@ -75,11 +76,13 @@ public class GameReplay extends Game implements ActionListener{
         stepBackwards = ElementCreator.CreateButton("<", 45, 30, this);
         playForward = ElementCreator.CreateDefaultButton("\u00BB", 45, 30, this);
         playBackwards = ElementCreator.CreateDefaultButton("\u00AB", 45, 30, this);
+        playPause = ElementCreator.CreateDefaultButton("Pause", 100, 30, this);
 
         sideBar.add(stepBackwards, BorderLayout.WEST);
         sideBar.add(stepForward, BorderLayout.WEST);
         sideBar.add(playBackwards, BorderLayout.WEST);
         sideBar.add(playForward, BorderLayout.WEST);
+        sideBar.add(playPause, BorderLayout.WEST);
 
         try {
             Scanner myReader = new Scanner(logFile);
@@ -141,6 +144,7 @@ public class GameReplay extends Game implements ActionListener{
         rp.setForward(stepForward);
         rp.setPlayForward(playForward);
         rp.setPlayBackwards(playBackwards);
+        rp.setPlayPause(playPause);
         rp.run();
     }
     @Override
@@ -177,6 +181,7 @@ public class GameReplay extends Game implements ActionListener{
             stepBackwards.setEnabled(false);
             stepForward.setEnabled(false);
             playBackwards.setEnabled(false);
+            playForward.setEnabled(false);
         } else if (e.getSource() == playBackwards) {
             rp.back = true;
             rp.backwards = true;
@@ -186,6 +191,14 @@ public class GameReplay extends Game implements ActionListener{
             stepBackwards.setEnabled(false);
             stepForward.setEnabled(false);
             playForward.setEnabled(false);
+            playBackwards.setEnabled(false);
+        } else if (e.getSource() == playPause) {
+            rp.backwards = false;
+            rp.forward = false;
+            stepBackwards.setEnabled(true);
+            stepForward.setEnabled(true);
+            playForward.setEnabled(true);
+            playBackwards.setEnabled(true);
         }
     }
     public List<CommonField.Direction> getPath(String line){

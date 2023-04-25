@@ -13,7 +13,7 @@ import static src.common.CommonField.Direction.*;
 
 public class ReplayLoop {
     private JLabel steps, currentStep;
-    private JButton stepForward, stepBackwards, playForward, playBackwards;
+    private JButton stepForward, stepBackwards, playForward, playBackwards, playPause;
     private Thread replayThread;
     private ReplayDetails replayDetails;
     public int step;
@@ -59,8 +59,10 @@ public class ReplayLoop {
             synchronized (this){
                 try{
                     if (forward || backwards) {
+                        playPause.setEnabled(true);
                         this.wait(200);
                     }else {
+                        playPause.setEnabled(false);
                         this.wait();
                     }
                 } catch (InterruptedException e) {
@@ -75,19 +77,31 @@ public class ReplayLoop {
                 step--;
                 forward = false;
                 stepBackwards.setEnabled(true);
-                stepForward.setEnabled(true);
+                stepForward.setEnabled(false);
                 playBackwards.setEnabled(true);
-                playForward.setEnabled(true);
+                playForward.setEnabled(false);
+                playPause.setEnabled(false);
                 continue;
+            } else if (forward || backwards){
+
+            }else {
+                stepForward.setEnabled(true);
+                playForward.setEnabled(true);
             }
 
             if(step < 0){
                 backwards = false;
-                stepBackwards.setEnabled(true);
+                stepBackwards.setEnabled(false);
                 stepForward.setEnabled(true);
-                playBackwards.setEnabled(true);
+                playBackwards.setEnabled(false);
                 playForward.setEnabled(true);
+                playPause.setEnabled(false);
                 continue;
+            } else if (forward || backwards){
+
+            } else {
+                stepBackwards.setEnabled(true);
+                playBackwards.setEnabled(true);
             }
 
 
@@ -164,4 +178,6 @@ public class ReplayLoop {
     public void setPlayBackwards(JButton playBackwards) {
         this.playBackwards = playBackwards;
     }
+
+    public void setPlayPause(JButton playPause) { this.playPause = playPause; }
 }

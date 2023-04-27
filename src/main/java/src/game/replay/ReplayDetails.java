@@ -2,7 +2,6 @@ package src.game.replay;
 
 import src.common.CommonField;
 import src.common.CommonMaze;
-import src.game.objects.Maze;
 
 import java.util.ArrayList;
 import java.util.List;

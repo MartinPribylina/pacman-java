@@ -7,13 +7,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class Menu extends JPanel {
+public class MainMenu extends JPanel {
     private JButton play;
     private JButton replay;
     private JButton stats;
     private JButton exit;
     private final ActionListener parentListener;
-    public Menu(ActionListener parentListener){
+    public MainMenu(ActionListener parentListener){
         this.parentListener = parentListener;
 
         this.setBackground(Color.BLACK);

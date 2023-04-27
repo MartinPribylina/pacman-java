@@ -93,20 +93,20 @@ public class GamePlay extends Game implements ActionListener{
 
         gameLoop = new FrameBasedGameLoop(gameController);
 
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('w'), "upAction");
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "upAction");
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('w'), "upAction");
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "upAction");
         this.getActionMap().put("upAction", gameLoop.getPlayerActions().getUpAction());
 
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('s'), "downAction");
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "downAction");
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('s'), "downAction");
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "downAction");
         this.getActionMap().put("downAction", gameLoop.getPlayerActions().getDownAction());
 
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('a'), "leftAction");
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"), "leftAction");
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('a'), "leftAction");
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"), "leftAction");
         this.getActionMap().put("leftAction", gameLoop.getPlayerActions().getLeftAction());
 
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('d'), "rightAction");
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("RIGHT"), "rightAction");
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('d'), "rightAction");
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("RIGHT"), "rightAction");
         this.getActionMap().put("rightAction", gameLoop.getPlayerActions().getRightAction());
 
         gameLoop.run();
@@ -119,13 +119,13 @@ public class GamePlay extends Game implements ActionListener{
         this.add(errorPanel, BorderLayout.CENTER);
 
         JLabel errorLabel = ElementCreator.CreateDefaultLabel("Error: " + result.getErrorMessage());
-        errorPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        errorPanel.setAlignmentX(CENTER_ALIGNMENT);
         errorPanel.add(errorLabel);
 
         JPanel wrap = new JPanel();
         wrap.setBackground(Color.BLACK);
         error = ElementCreator.CreateDefaultButton("OK", 100, 50, parentListener);
-        error.setAlignmentX(Component.CENTER_ALIGNMENT);
+        error.setAlignmentX(CENTER_ALIGNMENT);
         wrap.add(error);
         errorPanel.add(wrap);
     }
@@ -174,14 +174,14 @@ public class GamePlay extends Game implements ActionListener{
 
         JLabel errorLabel = ElementCreator.CreateDefaultLabel(isVictory ? "You won!" : "You lost!");
         errorLabel.setBorder(BorderFactory.createEmptyBorder(20,0,20,0));
-        errorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        errorLabel.setAlignmentX(CENTER_ALIGNMENT);
         errorLabel.setFont(new Font(Font.SERIF, Font.BOLD, 40));
         endGame.add(errorLabel);
 
         JPanel wrap = new JPanel();
         wrap.setBackground(Color.BLACK);
         playAgain = ElementCreator.CreateDefaultButton("Play Again!", 250, 50, parentListener);
-        playAgain.setAlignmentX(Component.CENTER_ALIGNMENT);
+        playAgain.setAlignmentX(CENTER_ALIGNMENT);
         wrap.add(playAgain);
         wrap.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
         endGame.add(wrap);

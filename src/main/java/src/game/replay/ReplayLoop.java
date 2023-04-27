@@ -1,15 +1,15 @@
-package src.game.replay;
+package src.main.java.src.game.replay;
 
-import src.common.CommonField;
-import src.common.CommonMaze;
-import src.common.CommonMazeObject;
-import src.game.objects.Ghost;
-import src.game.objects.MazeObject;
+import src.main.java.src.common.CommonField;
+import src.main.java.src.common.CommonMaze;
+import src.main.java.src.common.CommonMazeObject;
+import src.main.java.src.game.objects.Ghost;
+import src.main.java.src.game.objects.MazeObject;
 
 import javax.swing.*;
 import java.util.List;
 
-import static src.common.CommonField.Direction.*;
+import static src.main.java.src.common.CommonField.Direction.*;
 
 public class ReplayLoop {
     private JLabel steps, currentStep;

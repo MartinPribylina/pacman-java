@@ -1,6 +1,6 @@
-package src.gui;
+package src.main.java.src.gui;
 
-import src.common.CommonField;
+import src.main.java.src.common.CommonField;
 
 public interface IGame {
     void setObjectDescription(MazeObjectDescription objectDescription);

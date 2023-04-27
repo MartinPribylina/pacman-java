@@ -1,14 +1,14 @@
-package src.game.core;
+package src.main.java.src.game.core;
 
-import src.common.CommonField;
-import src.common.CommonMaze;
-import src.common.CommonMazeObject;
-import src.game.objects.Pacman;
-import src.game.save.GameLogging;
-import src.game.save.StatsData;
-import src.game.save.StatsSaveManager;
-import src.game.utility.GameLogicHelper;
-import src.gui.IGame;
+import src.main.java.src.common.CommonField;
+import src.main.java.src.common.CommonMaze;
+import src.main.java.src.common.CommonMazeObject;
+import src.main.java.src.game.objects.Pacman;
+import src.main.java.src.game.save.GameLogging;
+import src.main.java.src.game.save.StatsData;
+import src.main.java.src.game.save.StatsSaveManager;
+import src.main.java.src.game.utility.GameLogicHelper;
+import src.main.java.src.gui.IGame;
 
 import javax.swing.*;
 import java.io.*;

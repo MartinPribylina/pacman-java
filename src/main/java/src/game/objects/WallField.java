@@ -1,9 +1,9 @@
-package src.game.objects;
+package src.main.java.src.game.objects;
 
 
-import src.common.AbstractObservableField;
-import src.common.CommonField;
-import src.common.CommonMazeObject;
+import src.main.java.src.common.AbstractObservableField;
+import src.main.java.src.common.CommonField;
+import src.main.java.src.common.CommonMazeObject;
 
 public class WallField extends AbstractObservableField implements CommonField {
     private final int row;

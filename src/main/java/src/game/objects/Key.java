@@ -1,8 +1,8 @@
-package src.game.objects;
+package src.main.java.src.game.objects;
 
-import src.common.CommonField;
-import src.common.CommonMazeObject;
-import src.common.Observable;
+import src.main.java.src.common.CommonField;
+import src.main.java.src.common.CommonMazeObject;
+import src.main.java.src.common.Observable;
 
 public class Key extends MazeObject implements CommonMazeObject{
     public Key(CommonField field) {

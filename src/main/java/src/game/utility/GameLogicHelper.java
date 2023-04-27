@@ -1,8 +1,8 @@
-package src.game.utility;
+package src.main.java.src.game.utility;
 
-import src.common.CommonField;
-import src.common.CommonMazeObject;
-import src.game.objects.PathField;
+import src.main.java.src.common.CommonField;
+import src.main.java.src.common.CommonMazeObject;
+import src.main.java.src.game.objects.PathField;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
-package src.game.core;
+package src.main.java.src.game.core;
 
-import src.common.CommonField;
+import src.main.java.src.common.CommonField;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

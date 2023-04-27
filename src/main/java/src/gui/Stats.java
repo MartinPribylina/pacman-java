@@ -1,9 +1,9 @@
-package src.gui;
+package src.main.java.src.gui;
 
-import src.common.ElementCreator;
-import src.common.ImageEditor;
-import src.game.save.StatsData;
-import src.game.save.StatsSaveManager;
+import src.main.java.src.common.ElementCreator;
+import src.main.java.src.common.ImageEditor;
+import src.main.java.src.game.save.StatsData;
+import src.main.java.src.game.save.StatsSaveManager;
 
 import javax.swing.*;
 import java.awt.*;

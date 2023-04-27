@@ -1,7 +1,7 @@
-package src.common.readers.maze;
+package src.main.java.src.common.readers.maze;
 
-import src.game.MazeConfigure;
-import src.game.replay.GhostData;
+import src.main.java.src.game.MazeConfigure;
+import src.main.java.src.game.replay.GhostData;
 
 import java.io.File;
 import java.io.FileNotFoundException;

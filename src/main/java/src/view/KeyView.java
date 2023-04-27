@@ -1,7 +1,7 @@
-package src.view;
+package src.main.java.src.view;
 
-import src.common.CommonMazeObject;
-import src.common.gfx.MiscGfx;
+import src.main.java.src.common.CommonMazeObject;
+import src.main.java.src.common.gfx.MiscGfx;
 
 import java.awt.*;
 import java.io.Serializable;

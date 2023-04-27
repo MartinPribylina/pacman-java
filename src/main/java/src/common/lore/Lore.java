@@ -1,4 +1,4 @@
-package src.common.lore;
+package src.main.java.src.common.lore;
 
 public class Lore {
     public static String ghostNames[] = new String[]{

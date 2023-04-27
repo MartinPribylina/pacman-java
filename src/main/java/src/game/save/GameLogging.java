@@ -1,11 +1,11 @@
-package src.game.save;
+package src.main.java.src.game.save;
 
-import src.common.CommonField;
-import src.common.CommonMaze;
-import src.common.CommonMazeObject;
-import src.game.objects.Ghost;
-import src.game.objects.PathField;
-import src.game.replay.GhostData;
+import src.main.java.src.common.CommonField;
+import src.main.java.src.common.CommonMaze;
+import src.main.java.src.common.CommonMazeObject;
+import src.main.java.src.game.objects.Ghost;
+import src.main.java.src.game.objects.PathField;
+import src.main.java.src.game.replay.GhostData;
 
 import java.io.*;
 import java.nio.file.Files;

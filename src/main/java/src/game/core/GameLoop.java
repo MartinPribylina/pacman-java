@@ -1,4 +1,4 @@
-package src.game.core;
+package src.main.java.src.game.core;
 
 public abstract class GameLoop{
 

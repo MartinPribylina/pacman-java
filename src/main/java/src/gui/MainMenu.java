@@ -1,7 +1,7 @@
-package src.gui;
+package src.main.java.src.gui;
 
-import src.common.ElementCreator;
-import src.common.ImageEditor;
+import src.main.java.src.common.ElementCreator;
+import src.main.java.src.common.ImageEditor;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package src.game.save;
+package src.main.java.src.game.save;
 
 import java.io.Serializable;
 

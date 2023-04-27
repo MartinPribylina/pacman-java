@@ -1,6 +1,6 @@
-package src.main.java.src;
+package src;
 
-import src.main.java.src.gui.MainFrame;
+import src.gui.MainFrame;
 
 public class Run {
 

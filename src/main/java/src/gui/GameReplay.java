@@ -1,15 +1,15 @@
-package src.main.java.src.gui;
+package src.gui;
 
-import src.main.java.src.MazePresenter;
-import src.main.java.src.common.CommonField;
-import src.main.java.src.common.CommonMaze;
-import src.main.java.src.common.ElementCreator;
-import src.main.java.src.common.readers.maze.MazeFileReader;
-import src.main.java.src.common.readers.maze.MazeFileReaderResult;
-import src.main.java.src.game.MazeConfigure;
-import src.main.java.src.game.replay.ReplayDetails;
-import src.main.java.src.game.replay.ReplayLoop;
-import src.main.java.src.game.replay.GhostData;
+import src.MazePresenter;
+import src.common.CommonField;
+import src.common.CommonMaze;
+import src.common.ElementCreator;
+import src.common.readers.maze.MazeFileReader;
+import src.common.readers.maze.MazeFileReaderResult;
+import src.game.MazeConfigure;
+import src.game.replay.ReplayDetails;
+import src.game.replay.ReplayLoop;
+import src.game.replay.GhostData;
 
 import javax.swing.*;
 import java.awt.*;

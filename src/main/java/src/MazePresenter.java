@@ -1,9 +1,9 @@
-package src.main.java.src;
+package src;
 
-import src.main.java.src.common.CommonMaze;
-import src.main.java.src.gui.GamePlay;
-import src.main.java.src.gui.IGame;
-import src.main.java.src.view.FieldView;
+import src.common.CommonMaze;
+import src.gui.GamePlay;
+import src.gui.IGame;
+import src.view.FieldView;
 
 import java.awt.*;
 import javax.swing.*;

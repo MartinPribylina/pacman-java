@@ -1,4 +1,4 @@
-package src.main.java.src.common;
+package src.common;
 
 public interface Observable {
     void addObserver(Observer var1);

@@ -1,8 +1,8 @@
-package src.main.java.src.view;
+package src.view;
 
-import src.main.java.src.common.CommonMazeObject;
-import src.main.java.src.common.IGhost;
-import src.main.java.src.common.gfx.GhostGfx;
+import src.common.CommonMazeObject;
+import src.common.IGhost;
+import src.common.gfx.GhostGfx;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;

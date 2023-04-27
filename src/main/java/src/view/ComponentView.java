@@ -1,4 +1,4 @@
-package src.main.java.src.view;
+package src.view;
 
 import java.awt.Graphics;
 

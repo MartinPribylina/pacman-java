@@ -1,13 +1,13 @@
-package src.main.java.src.view;
+package src.view;
 
-import src.main.java.src.common.CommonField;
-import src.main.java.src.common.CommonMazeObject;
-import src.main.java.src.common.IGhost;
-import src.main.java.src.common.Observable;
-import src.main.java.src.common.gfx.MiscGfx;
-import src.main.java.src.common.lore.MazeObjectDescriptionBuilder;
-import src.main.java.src.game.objects.PathField;
-import src.main.java.src.gui.IGame;
+import src.common.CommonField;
+import src.common.CommonMazeObject;
+import src.common.IGhost;
+import src.common.Observable;
+import src.common.gfx.MiscGfx;
+import src.common.lore.MazeObjectDescriptionBuilder;
+import src.game.objects.PathField;
+import src.gui.IGame;
 
 import javax.swing.*;
 import java.awt.*;

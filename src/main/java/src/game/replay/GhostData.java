@@ -1,6 +1,6 @@
-package src.main.java.src.game.replay;
+package src.game.replay;
 
-import src.main.java.src.common.CommonField;
+import src.common.CommonField;
 
 import java.io.Serializable;
 import java.util.ArrayList;

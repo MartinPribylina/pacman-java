@@ -1,4 +1,4 @@
-package src.main.java.src.game.save;
+package src.game.save;
 
 import java.io.*;
 

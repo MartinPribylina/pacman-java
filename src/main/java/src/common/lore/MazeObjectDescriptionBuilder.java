@@ -1,6 +1,6 @@
-package src.main.java.src.common.lore;
+package src.common.lore;
 
-import src.main.java.src.gui.MazeObjectDescription;
+import src.gui.MazeObjectDescription;
 
 import java.awt.*;
 

@@ -1,8 +1,8 @@
-package src.main.java.src.game;
+package src.game;
 
 
-import src.main.java.src.game.objects.*;
-import src.main.java.src.game.replay.GhostData;
+import src.game.objects.*;
+import src.game.replay.GhostData;
 
 import java.io.Serializable;
 import java.util.List;

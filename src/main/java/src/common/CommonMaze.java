@@ -1,4 +1,4 @@
-package src.main.java.src.common;
+package src.common;
 
 import java.util.List;
 

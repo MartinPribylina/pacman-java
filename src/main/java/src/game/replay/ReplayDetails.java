@@ -1,7 +1,7 @@
-package src.main.java.src.game.replay;
+package src.game.replay;
 
-import src.main.java.src.common.CommonField;
-import src.main.java.src.common.CommonMaze;
+import src.common.CommonField;
+import src.common.CommonMaze;
 
 import java.util.ArrayList;
 import java.util.List;

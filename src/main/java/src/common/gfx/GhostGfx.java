@@ -1,7 +1,7 @@
-package src.main.java.src.common.gfx;
+package src.common.gfx;
 
-import src.main.java.src.common.CommonField;
-import src.main.java.src.common.ImageEditor;
+import src.common.CommonField;
+import src.common.ImageEditor;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

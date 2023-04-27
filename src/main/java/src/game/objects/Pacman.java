@@ -1,9 +1,9 @@
-package src.main.java.src.game.objects;
+package src.game.objects;
 
 
-import src.main.java.src.common.CommonField;
-import src.main.java.src.common.CommonMazeObject;
-import src.main.java.src.common.Observable;
+import src.common.CommonField;
+import src.common.CommonMazeObject;
+import src.common.Observable;
 
 public class Pacman extends MazeObject implements CommonMazeObject {
 

@@ -1,6 +1,6 @@
-package src.main.java.src.gui;
+package src.gui;
 
-import src.main.java.src.common.CommonField;
+import src.common.CommonField;
 
 import javax.swing.*;
 

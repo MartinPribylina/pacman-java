@@ -1,4 +1,4 @@
-package src.main.java.src.game.core;
+package src.game.core;
 
 import java.io.Serializable;
 

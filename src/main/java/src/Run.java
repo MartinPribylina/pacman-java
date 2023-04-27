@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Runnable class that open main frame
+ ************************/
 package src;
 
 import src.gui.MainFrame;

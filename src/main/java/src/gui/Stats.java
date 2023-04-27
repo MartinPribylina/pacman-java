@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Class that creates a stats GUI
+ ************************/
 package src.gui;
 
 import src.common.ElementCreator;

@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Class for key object, that can be placed on a field
+ ************************/
 package src.game.objects;
 
 import src.common.CommonField;

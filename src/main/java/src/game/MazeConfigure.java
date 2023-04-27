@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina, Samuel Gall
+ *
+ * Class for building a maze
+ ************************/
 package src.game;
 
 

@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Class for a field, that represents a wall, objects can not be placed on it
+ ************************/
 package src.game.objects;
 
 

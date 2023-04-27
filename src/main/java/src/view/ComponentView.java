@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Interface component view
+ ************************/
 package src.view;
 
 import java.awt.Graphics;

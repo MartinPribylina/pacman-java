@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Class for ghost display
+ ************************/
 package src.view;
 
 import src.common.CommonMazeObject;

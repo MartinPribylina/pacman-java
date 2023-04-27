@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Class that creates a game GUI and starts the game loop
+ ************************/
 package src.gui;
 
 import src.MazePresenter;

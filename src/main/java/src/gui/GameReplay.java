@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Samuel Gall
+ *
+ * Class that creates a replay GUI and starts the replay loop
+ ************************/
 package src.gui;
 
 import src.MazePresenter;

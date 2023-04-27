@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Class for field display
+ ************************/
 package src.view;
 
 import src.common.CommonField;

@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Graphics for ghost object
+ ************************/
 package src.common.gfx;
 
 import src.common.CommonField;

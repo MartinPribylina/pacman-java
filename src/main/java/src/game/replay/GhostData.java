@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Samuel Gall
+ *
+ * Class that holds data of ghosts
+ ************************/
 package src.game.replay;
 
 import src.common.CommonField;

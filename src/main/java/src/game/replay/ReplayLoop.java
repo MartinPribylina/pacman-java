@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Samuel Gall
+ *
+ * Manages replay progress and it's GUI
+ ************************/
 package src.game.replay;
 
 import src.common.CommonField;

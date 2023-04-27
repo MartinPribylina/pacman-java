@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Graphics for misc
+ ************************/
 package src.common.gfx;
 
 import src.common.ImageEditor;

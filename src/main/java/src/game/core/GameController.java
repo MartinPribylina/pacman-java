@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina, Samuel Gall
+ *
+ * Updates game status based on player input
+ ************************/
 package src.game.core;
 
 import src.common.CommonField;

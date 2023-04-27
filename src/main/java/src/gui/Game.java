@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * ----------
+ ************************/
 package src.gui;
 
 import src.common.CommonField;

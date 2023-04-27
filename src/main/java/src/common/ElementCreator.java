@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * GUI element creator
+ ************************/
 package src.common;
 
 import javax.swing.*;

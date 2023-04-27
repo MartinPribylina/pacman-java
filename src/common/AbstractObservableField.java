@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Abstract class for managing observers on fields
+ ************************/
 package src.common;
 
 import java.util.HashSet;

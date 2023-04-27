@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * CommonMaze interface
+ ************************/
 package src.common;
 
 import java.util.List;

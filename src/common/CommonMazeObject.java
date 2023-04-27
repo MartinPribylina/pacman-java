@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * CommonMazeObject interface
+ ************************/
 package src.common;
 
 import java.io.Serializable;

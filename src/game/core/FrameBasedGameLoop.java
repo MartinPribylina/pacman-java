@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Reads player input and call update every frame
+ ************************/
 package src.game.core;
 
 import java.io.Serializable;

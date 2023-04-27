@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Class that reads and saves stats data into a file
+ ************************/
 package src.game.save;
 
 import java.io.*;

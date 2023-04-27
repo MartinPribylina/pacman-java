@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Class for ghost object, that can be placed on a field
+ ************************/
 package src.game.objects;
 
 

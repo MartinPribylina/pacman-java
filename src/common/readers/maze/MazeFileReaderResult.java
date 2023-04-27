@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Utility class for maze file reader
+ ************************/
 package src.common.readers.maze;
 
 import src.game.MazeConfigure;

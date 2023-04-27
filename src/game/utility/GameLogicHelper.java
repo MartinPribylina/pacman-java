@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Class for making paths for ghosts
+ ************************/
 package src.game.utility;
 
 import src.common.CommonField;

@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina, Samuel Gall
+ *
+ * Class that creates a main frame GUI. It's a parent for all other GUI elements.
+ ************************/
 package src.gui;
 
 import src.game.save.GameLogging;

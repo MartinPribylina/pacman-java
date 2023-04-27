@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Observable interface
+ ************************/
 package src.common;
 
 public interface Observable {

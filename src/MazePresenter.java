@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Class for maze vizualization
+ ************************/
 package src;
 
 import src.common.CommonMaze;

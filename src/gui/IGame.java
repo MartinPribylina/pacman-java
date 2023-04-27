@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Interface for game
+ ************************/
 package src.gui;
 
 import src.common.CommonField;

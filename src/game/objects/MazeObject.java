@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina, Samuel Gall
+ *
+ * Abstract class for general maze object, that can be placed on a field
+ ************************/
 package src.game.objects;
 
 

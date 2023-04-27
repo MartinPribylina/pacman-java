@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Class for description of maze object
+ ************************/
 package src.gui;
 
 import java.awt.*;

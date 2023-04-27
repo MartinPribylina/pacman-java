@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Class for holding stats data
+ ************************/
 package src.game.save;
 
 import java.io.Serializable;

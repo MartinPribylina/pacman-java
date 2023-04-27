@@ -5,12 +5,9 @@
  ************************/
 package src.gui;
 
-import src.game.save.GameLogging;
-import src.game.save.StatsData;
-import src.game.save.StatsSaveManager;
-
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Menu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -25,7 +22,7 @@ public class MainFrame extends JFrame implements ActionListener {
     private static final String mazeFolderPath = System.getProperty("user.dir") + "\\data\\maze";
     private static final String replayFolderPath = System.getProperty("user.dir") + "\\data\\replay";
 
-    private final Menu menu;
+    private final MainMenu menu;
 
     private GamePlay gamePlay;
 
@@ -38,7 +35,7 @@ public class MainFrame extends JFrame implements ActionListener {
     public MainFrame(){
         FrameSetup();
 
-        menu = new Menu(this);
+        menu = new MainMenu(this);
         this.add(menu);
 
         this.setVisible(true); // set frame visible, Calling last so everything gets displayed

@@ -10,8 +10,6 @@ import src.game.objects.*;
 import src.game.replay.GhostData;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.List;
 
 public class MazeConfigure implements Serializable {

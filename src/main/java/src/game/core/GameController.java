@@ -9,21 +9,14 @@ import src.common.CommonField;
 import src.common.CommonMaze;
 import src.common.CommonMazeObject;
 import src.game.objects.Pacman;
-import src.game.objects.PathField;
 import src.game.save.GameLogging;
 import src.game.save.StatsData;
 import src.game.save.StatsSaveManager;
 import src.game.utility.GameLogicHelper;
-import src.gui.Game;
 import src.gui.IGame;
 
 import javax.swing.*;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameController implements Serializable {

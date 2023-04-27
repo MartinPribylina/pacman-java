@@ -130,7 +130,7 @@ public class GameReplay extends Game implements ActionListener{
             JPanel wrap = new JPanel();
             wrap.setBackground(Color.BLACK);
             error = ElementCreator.CreateDefaultButton("OK", 100, 50, parentListener);
-            error.setAlignmentX(Component.CENTER_ALIGNMENT);
+            error.setAlignmentX(CENTER_ALIGNMENT);
             wrap.add(error);
             errorPanel.add(wrap);
 

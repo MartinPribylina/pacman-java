@@ -13,10 +13,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.io.Serializable;
 
-import java.awt.*;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
-
 public class GhostView implements ComponentView, Serializable {
     private final CommonMazeObject model;
     private final FieldView parent;

@@ -8,7 +8,6 @@ package src.game.replay;
 import src.common.CommonField;
 
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 

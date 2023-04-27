@@ -5,7 +5,6 @@
  ************************/
 package src.common.gfx;
 
-import src.common.CommonField;
 import src.common.ImageEditor;
 
 import javax.imageio.ImageIO;

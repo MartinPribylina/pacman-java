@@ -7,7 +7,6 @@ package src.view;
 
 import src.common.CommonMazeObject;
 import src.common.gfx.MiscGfx;
-import src.common.gfx.PacmanGfx;
 
 import java.awt.*;
 import java.io.Serializable;

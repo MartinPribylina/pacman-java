@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Lore/description builder
+ ************************/
 package src.common.lore;
 
 import src.gui.MazeObjectDescription;

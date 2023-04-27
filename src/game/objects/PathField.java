@@ -1,5 +1,9 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Class for a field, that represents a path, objects can be placed on it
+ ************************/
 package src.game.objects;
-
 
 
 import src.common.AbstractObservableField;

@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Lore/description on hover on maze objects
+ ************************/
 package src.common.lore;
 
 public class Lore {

@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Class for maze object
+ ************************/
 package src.game.objects;
 
 

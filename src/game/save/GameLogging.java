@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Samuel Gall
+ *
+ * Class that saves data every frame of the game and saves them into a file
+ ************************/
 package src.game.save;
 
 import src.common.CommonField;

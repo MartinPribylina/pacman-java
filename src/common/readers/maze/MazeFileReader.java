@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Reads maze from txt files
+ ************************/
 package src.common.readers.maze;
 
 import src.game.MazeConfigure;

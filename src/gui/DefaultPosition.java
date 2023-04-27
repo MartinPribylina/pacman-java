@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Samuel Gall
+ *
+ * Class that creates GUI for choosing a default position in replay mode
+ ************************/
 package src.gui;
 
 import javax.swing.*;

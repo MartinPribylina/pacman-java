@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * CommonField interface
+ ************************/
 package src.common;
 
 import java.io.Serializable;

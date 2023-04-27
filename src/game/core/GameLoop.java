@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Contains methods to set game status, start and stop the game and a loop that game runs on
+ ************************/
 package src.game.core;
 
 public abstract class GameLoop{

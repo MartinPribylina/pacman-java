@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Image scale editor
+ ************************/
 package src.common;
 
 import javax.swing.*;

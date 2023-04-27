@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Contains methods for changing objects move direction trough controller
+ ************************/
 package src.game.core;
 
 import src.common.CommonField;

@@ -1,3 +1,8 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Class for pacman object, that can be placed on a field
+ ************************/
 package src.game.objects;
 
 

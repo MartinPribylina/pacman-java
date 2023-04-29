@@ -1,8 +1,8 @@
-/*************************
- * Authors: Martin Pribylina, Samuel Gall
+/**
+ * @author Martin Pribylina, Samuel Gall
  *
  * Class for building a maze
- ************************/
+ */
 package src.game;
 
 
@@ -22,7 +22,9 @@ public class MazeConfigure implements Serializable {
     private List<GhostData> ghostsData;
 
     boolean mazeHasKey = false;
-
+    /**
+     * Class constructor.
+     */
     public MazeConfigure()
     {
 

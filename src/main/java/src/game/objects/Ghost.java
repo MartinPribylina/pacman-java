@@ -8,14 +8,18 @@ package src.game.objects;
 
 import src.common.CommonField;
 import src.common.CommonMazeObject;
-import src.common.IGhost;
 import src.common.Observable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Ghost extends MazeObject implements CommonMazeObject, IGhost {
+/**
+ * Ghost is class for ghost object, that can be placed on a field
+ *
+ * @author      Martin Pribylina
+ */
+public class Ghost extends MazeObject implements CommonMazeObject {
 
     int ghostType;
     private List<CommonField.Direction> ghostPath = new ArrayList<>();
@@ -74,7 +78,6 @@ public class Ghost extends MazeObject implements CommonMazeObject, IGhost {
         return true;
     }
 
-    @Override
     public int ghostType() {
         return ghostType;
     }

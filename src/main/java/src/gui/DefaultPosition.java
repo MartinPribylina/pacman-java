@@ -9,6 +9,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * GamePlay is a class which creates GUI for choosing a default position in replay mode
+ *
+ * @author      Samuel Gall
+ */
 public class DefaultPosition extends JPanel {
     private JLabel startLabel;
     private JButton begining;

@@ -10,6 +10,11 @@ import src.common.CommonField;
 import src.common.CommonMazeObject;
 import src.common.Observable;
 
+/**
+ * Pacman is class for pacman object, that can be placed on a field
+ *
+ * @author      Martin Pribylina
+ */
 public class Pacman extends MazeObject implements CommonMazeObject {
 
     private int lives;

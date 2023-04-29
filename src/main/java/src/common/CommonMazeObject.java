@@ -5,9 +5,12 @@
  ************************/
 package src.common;
 
-import java.io.Serializable;
-
-public interface CommonMazeObject extends Serializable {
+/**
+ * CommonMazeObject is interface for CommonMazeObject
+ *
+ * @author      Martin Pribylina
+ */
+public interface CommonMazeObject {
     boolean canMove(CommonField.Direction var1);
 
     boolean move(CommonField.Direction var1);

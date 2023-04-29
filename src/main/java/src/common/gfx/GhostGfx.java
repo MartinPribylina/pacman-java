@@ -14,6 +14,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * GhostGfx is class handling logic for getting ghost images
+ *
+ * @author      Martin Pribylina
+ */
 public class GhostGfx {
 
     public static Image GetImage(CommonField.Direction dir, int width, int ghostType){

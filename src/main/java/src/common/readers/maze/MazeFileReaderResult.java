@@ -7,6 +7,11 @@ package src.common.readers.maze;
 
 import src.game.MazeConfigure;
 
+/**
+ * MazeFileReader is class for encapsulating result of maze file reader
+ *
+ * @author      Martin Pribylina
+ */
 public class MazeFileReaderResult {
     private int errorCode = 0;
     private String errorMessage = "";

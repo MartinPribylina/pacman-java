@@ -13,8 +13,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * GameLogicHelper is class with logic game functions such as Finding the shortest path between two points
+ *
+ * @author      Martin Pribylina
+ */
 public class GameLogicHelper {
 
+    /**
+     * Algorithm for finding the shortest path between two Fields
+     * @param currentField
+     * @param goalField
+     * @return List of directions to follow in order to get from currentField to goalField
+     */
     public static List<CommonField.Direction> FindShortestPath(CommonField currentField, CommonField goalField){
         if (goalField == null)
             return null;
@@ -74,6 +85,12 @@ public class GameLogicHelper {
             paths = newPaths;
         }
     }
+
+    /**
+     * Finds Random Direction which is not last object's direction, recursively
+     * @param object
+     * @return
+     */
     public static CommonField.Direction RandomDirection(CommonMazeObject object){
         Random rand = new Random();
         int r = rand.nextInt(4);

@@ -5,10 +5,15 @@
  ************************/
 package src.common.lore;
 
-import src.gui.MazeObjectDescription;
+import src.view.MazeObjectDescription;
 
 import java.awt.*;
 
+/**
+ * MazeObjectDescriptionBuilder is class which builds descriptions
+ *
+ * @author      Martin Pribylina
+ */
 public class MazeObjectDescriptionBuilder {
 
     MazeObjectDescription mazeObjectDescription;

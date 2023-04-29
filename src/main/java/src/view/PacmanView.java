@@ -1,34 +1,39 @@
 /*************************
- * Authors: Martin Pribylina
+ * Authors: taken from Task 2 https://moodle.vut.cz/mod/folder/view.php?id=310208, further edited by Martin Pribylina
  *
- * Class for ghost display
+ * PacmanView is class for ghost display
  ************************/
+
 package src.view;
 
 import src.common.CommonMazeObject;
 import src.common.gfx.PacmanGfx;
 
 import java.awt.*;
-import java.io.Serializable;
 
-public class PacmanView implements ComponentView, Serializable {
-    private final CommonMazeObject model;
-    private final FieldView parent;
+/**
+ * PacmanView is class inheriting MazeObjectView and overriding GetImage in order to draw Pacman with animation
+ *
+ * @author      Martin Pribylina
+ */
+public class PacmanView extends MazeObjectView {
 
-
-    public PacmanView(FieldView parent, CommonMazeObject m) {
-        this.model = m;
-        this.parent = parent;
+    /**
+     * @see MazeObjectView
+     * @param parent
+     * @param mazeObject
+     */
+    public PacmanView(FieldView parent, CommonMazeObject mazeObject){
+        super(parent, mazeObject);
     }
 
-    public void paintComponent(Graphics g) {
-        Graphics2D g2 = (Graphics2D)g;
-        Rectangle bounds = this.parent.getBounds();
-        double w = bounds.getWidth();
-        double h = bounds.getHeight();
-        double diameter = Math.min(h, w) - Math.min(h, w) / 100 * 10;
-        double x = (w - diameter) / 2.0;
-        double y = (h - diameter) / 2.0;
-        g2.drawImage(PacmanGfx.GetImage(model.lastMove(), (int)diameter, model.animStep()), (int) x, (int)y, null);
+    /**
+     *
+     * @param size Width and height of image
+     * @return
+     */
+    @Override
+    public Image GetImage(double size) {
+        return PacmanGfx.GetImage(mazeObject.lastMove(), (int) size, mazeObject.animStep());
     }
 }

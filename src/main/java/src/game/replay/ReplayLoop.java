@@ -16,8 +16,13 @@ import java.util.List;
 
 import static src.common.CommonField.Direction.*;
 
+/**
+ * ReplayLoop is class for managing replay logic and updating Replay GUI
+ *
+ * @author      Samuel Gall
+ */
 public class ReplayLoop {
-    private JLabel steps, currentStep;
+    private JLabel currentStep;
     private JButton stepForward, stepBackwards, playForward, playBackwards, playPause;
     private Thread replayThread;
     private ReplayDetails replayDetails;

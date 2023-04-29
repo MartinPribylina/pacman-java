@@ -9,6 +9,11 @@ import src.common.CommonField;
 import src.common.CommonMazeObject;
 import src.common.Observable;
 
+/**
+ * Key is class for key object, that can be placed on a field
+ *
+ * @author      Martin Pribylina
+ */
 public class Key extends MazeObject implements CommonMazeObject{
     public Key(CommonField field) {
         super(field);

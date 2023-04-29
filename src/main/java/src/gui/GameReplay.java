@@ -20,12 +20,23 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.font.FontRenderContext;
+import java.awt.font.LineBreakMeasurer;
+import java.awt.font.TextLayout;
+import java.awt.geom.Rectangle2D;
 import java.io.FileNotFoundException;
+import java.text.AttributedCharacterIterator;
+import java.text.AttributedString;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.io.File;
 
+/**
+ * GameReplay is a class displaying and handling Replay functions
+ *
+ * @author      Samuel Gall
+ */
 public class GameReplay extends Game implements ActionListener{
     private final JButton menu;
     private JButton error;
@@ -45,6 +56,12 @@ public class GameReplay extends Game implements ActionListener{
     private final ActionListener parentListener;
     private ReplayLoop rp;
     private DefaultPosition defaultPosition;
+
+    /**
+     *
+     * @param parentListener used for handling button actions outside this class in MainFrame
+     * @param logFile Log file path for reading replay details
+     */
     public GameReplay(ActionListener parentListener, File logFile) {
         this.parentListener = parentListener;
         this.logFile = logFile;
@@ -236,6 +253,8 @@ public class GameReplay extends Game implements ActionListener{
         }
         return path;
     }
+
+
     public JButton getMenu() {
         return menu;
     }

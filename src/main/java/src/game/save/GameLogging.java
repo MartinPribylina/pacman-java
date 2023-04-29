@@ -19,7 +19,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class GameLogging implements Serializable {
+/**
+ * GameLogging is class for saving game logs after each game frame
+ *
+ * @author      Samuel Gall
+ */
+public class GameLogging {
     private String filepath;
     private CommonMaze maze;
     private int time;
@@ -106,21 +111,5 @@ public class GameLogging implements Serializable {
 
     public void setMaze(CommonMaze maze) {
         this.maze = maze;
-    }
-
-    public int getTime() {
-        return time;
-    }
-
-    public List<CommonField.Direction> getPacmanPath() {
-        return pacmanPath;
-    }
-
-    public String getFilepath() {
-        return filepath;
-    }
-
-    public Dictionary<PathField, GhostData> getGhostsData() {
-        return ghostsData;
     }
 }

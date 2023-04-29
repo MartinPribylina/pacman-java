@@ -10,12 +10,15 @@ import src.common.CommonField;
 import src.common.CommonMaze;
 import src.common.CommonMazeObject;
 import src.common.Observable;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Maze implements CommonMaze, Serializable {
+/**
+ * Maze is class for holding data about maze
+ *
+ * @author      Martin Pribylina
+ */
+public class Maze implements CommonMaze {
 
     private final int cols;
     private final int rows;

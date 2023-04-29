@@ -13,6 +13,11 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.List;
 
+/**
+ * MazeFileReader is class which reads maze from txt files
+ *
+ * @author      Martin Pribylina
+ */
 public class MazeFileReader {
 
     public static MazeFileReaderResult ConfigureMaze(String filePath, List<GhostData> ghostsData){

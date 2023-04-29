@@ -1,12 +1,17 @@
+/*************************
+ * Authors: Martin Pribylina
+ *
+ * Runs the App, initiates MainFrame
+ ************************/
+
 package src;
 
 import src.gui.MainFrame;
 
 /**
+ * Runs the App, initiates MainFrame
+ *
  * @author      Martin Pribylina
- * @author      Samuel Gall
- * @version     %I%, %G%
- * @since       1.0
  */
 public class Run {
 

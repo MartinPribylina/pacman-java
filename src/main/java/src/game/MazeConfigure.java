@@ -12,7 +12,12 @@ import src.game.replay.GhostData;
 import java.io.Serializable;
 import java.util.List;
 
-public class MazeConfigure implements Serializable {
+/**
+ * MazeConfigure is class handling logic for creating Maze
+ *
+ * @author      Martin Pribylina
+ */
+public class MazeConfigure {
 
     private int rows, cols;
     private int currentRow;

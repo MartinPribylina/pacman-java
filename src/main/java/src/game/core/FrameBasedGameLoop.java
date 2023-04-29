@@ -1,13 +1,16 @@
 /*************************
  * Authors: Martin Pribylina
  *
- * Reads player input and call update every frame
+ * Waits for Player input and calls game controller to update to new frame
  ************************/
 package src.game.core;
 
-import java.io.Serializable;
-
-public class FrameBasedGameLoop extends GameLoop implements Serializable {
+/**
+ * FrameBasedGameLoop is class which waits for Player input and calls game controller to update to new frame
+ *
+ * @author      Martin Pribylina
+ */
+public class FrameBasedGameLoop extends GameLoop {
     public FrameBasedGameLoop(GameController _controller) {
         super(_controller);
         _controller.setGameLoop(this);

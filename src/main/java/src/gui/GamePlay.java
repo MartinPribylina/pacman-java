@@ -27,7 +27,7 @@ import java.awt.event.ActionListener;
  *
  * @author      Martin Pribylina
  */
-public class GamePlay extends Game implements ActionListener{
+public class GamePlay extends AbstractGame implements ActionListener{
 
     private JButton menu;
     private JButton pause;
@@ -57,13 +57,14 @@ public class GamePlay extends Game implements ActionListener{
 
         MazeFileReaderResult result = MazeFileReader.ConfigureMaze(filePath, null);
         MazeConfigure mazeConfigure = result.getMazeConfigure();
-        CommonMaze maze = mazeConfigure.createMaze();
 
-        if (result.getErrorCode() != 0 || (mazeConfigure != null && !mazeConfigure.isReadingSuccess()) || maze == null)
+        if (result.getErrorCode() != 0 || (mazeConfigure != null && !mazeConfigure.isReadingSuccess()))
         {
             ShowError(result);
             return;
         }
+
+        CommonMaze maze = mazeConfigure.createMaze();
 
         presenter = new MazePresenter(maze, this);
         this.add(presenter, BorderLayout.CENTER);
@@ -172,6 +173,8 @@ public class GamePlay extends Game implements ActionListener{
         wrap.add(playAgain);
         wrap.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
         endGame.add(wrap);
+
+        pause.setEnabled(false);
     }
 
     public JButton getMenu() {

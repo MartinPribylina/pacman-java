@@ -16,10 +16,10 @@ import java.awt.*;
  *
  * @author      Martin Pribylina
  */
-public class PacmanView extends MazeObjectView {
+public class PacmanView extends AbstractMazeObjectView {
 
     /**
-     * @see MazeObjectView
+     * @see AbstractMazeObjectView
      * @param parent
      * @param mazeObject
      */

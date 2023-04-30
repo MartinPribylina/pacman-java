@@ -57,22 +57,16 @@ public class GameLogging {
     }
 
     public void saveIntoFile(){
-        System.out.println("Writing into file");
         String replayPath = System.getProperty("user.dir") + "\\data\\replay";
         try {
             Files.createDirectories(Paths.get(replayPath));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("-yyyyMMdd-HHmm");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("-yyyyMMdd-HHmmss");
         LocalDateTime now = LocalDateTime.now();
         try {
             File file = new File(replayPath + "\\Replay" + dtf.format(now) + ".txt");
-            if (file.createNewFile()) {
-                System.out.println("File created: " + file.getName());
-            } else {
-                System.out.println("File already exists.");
-            }
             FileWriter fileWriter = new FileWriter(file.getAbsolutePath());
 
             File mazeFile = new File(filepath);

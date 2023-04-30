@@ -54,6 +54,36 @@ public class PathField extends AbstractObservableField implements CommonField {
         return null;
     }
 
+    @Override
+    public List<CommonMazeObject> getAll() {
+        List<CommonMazeObject> commonMazeObjects = new ArrayList<>();
+
+        for (Observer observer :
+                observers) {
+            if(observer instanceof Key)
+            {
+                commonMazeObjects.add ((CommonMazeObject) observer);
+            }
+        }
+
+        for (Observer observer :
+                observers) {
+            if(observer instanceof Ghost)
+            {
+                commonMazeObjects.add ((CommonMazeObject) observer);
+            }
+        }
+
+        for (Observer observer :
+                observers) {
+            if(observer instanceof Pacman)
+            {
+                commonMazeObjects.add ((CommonMazeObject) observer);
+            }
+        }
+        return commonMazeObjects;
+    }
+
     public Pacman getPacman() {
 
         for (Observer observer :

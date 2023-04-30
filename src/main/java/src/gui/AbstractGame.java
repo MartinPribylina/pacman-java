@@ -18,11 +18,11 @@ import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
 
 /**
- * Play is abstract base class holding common functionality for GamePlay and GameReplay
+ * AbstractGame is abstract base class holding common functionality for GamePlay and GameReplay
  *
  * @author      Martin Pribylina
  */
-public abstract class Game extends JPanel implements IGame {
+public abstract class AbstractGame extends JPanel implements IGame {
     public MazeObjectDescription objectDescription;
 
     /**

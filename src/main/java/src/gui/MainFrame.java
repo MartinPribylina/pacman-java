@@ -108,7 +108,6 @@ public class MainFrame extends JFrame implements ActionListener {
         } else if(e.getSource() == menu.getExit()){
             this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         }else if(gamePlay != null && (e.getSource() == gamePlay.getMenu() || e.getSource() == gamePlay.getError())){
-            gamePlay.getGameLoop().stop();
             this.remove(gamePlay);
             gamePlay = null;
             this.add(menu);

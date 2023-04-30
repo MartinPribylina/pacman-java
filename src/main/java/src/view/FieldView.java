@@ -11,6 +11,7 @@ import src.common.Observable;
 import src.common.gfx.MiscGfx;
 import src.common.lore.MazeObjectDescriptionBuilder;
 import src.game.objects.Ghost;
+import src.game.objects.Key;
 import src.game.objects.PathField;
 import src.gui.IGame;
 
@@ -129,8 +130,30 @@ public class FieldView extends JPanel implements Observable.Observer  {
      * Paint objects which are on this field
      * @param g the <code>Graphics</code> object to protect
      */
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        boolean a = false;
+        boolean b = false;
+
+        for (ComponentView view :
+                objects) {
+            if(view instanceof KeyView)
+            {
+                a = true;
+            }
+
+            if(view instanceof PacmanView)
+            {
+                b = true;
+            }
+        }
+
+        if (a && b)
+        {
+            System.out.println("aa");
+        }
+
         for (int i = 0; i < this.objects.size(); i++){
             objects.get(i).paintComponent(g);
         }
@@ -144,17 +167,21 @@ public class FieldView extends JPanel implements Observable.Observer  {
             this.setBackground(Color.lightGray);
             this.objects.clear();
             if (!this.model.isEmpty()) {
-                CommonMazeObject o = this.model.get();
-                ComponentView v = null;
-                if (o.isPacman()){
-                    v = new PacmanView(this, this.model.get());
-                }else if (o.isGhost()){
-                    v = new GhostView(this, this.model.get());
-                }else if (o.isKey()){
-                    v = new KeyView(this, this.model.get());
+                var objects = this.model.getAll();
+
+                for (int i = 0; i < objects.size(); i++){
+                    ComponentView view = null;
+                    if (objects.get(i).isPacman()){
+                        view = new PacmanView(this, objects.get(i));
+                    }else if (objects.get(i).isGhost()){
+                        view = new GhostView(this, objects.get(i));
+                    }else if (objects.get(i).isKey()){
+                        view = new KeyView(this, objects.get(i));
+                    }
+
+                    this.objects.add(view);
                 }
 
-                this.objects.add(v);
             }
 
         } else {

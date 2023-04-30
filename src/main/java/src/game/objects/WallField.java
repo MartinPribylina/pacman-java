@@ -10,6 +10,8 @@ import src.common.AbstractObservableField;
 import src.common.CommonField;
 import src.common.CommonMazeObject;
 
+import java.util.List;
+
 /**
  * WallField is class for a field, that represents a wall, objects can not be placed on it
  *
@@ -38,6 +40,11 @@ public class WallField extends AbstractObservableField implements CommonField {
 
     @Override
     public CommonMazeObject get() {
+        return null;
+    }
+
+    @Override
+    public List<CommonMazeObject> getAll() {
         return null;
     }
 

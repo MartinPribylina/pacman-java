@@ -16,10 +16,10 @@ import java.awt.*;
  *
  * @author      Martin Pribylina
  */
-public class GhostView extends MazeObjectView {
+public class GhostView extends AbstractMazeObjectView {
 
     /**
-     * @see MazeObjectView
+     * @see AbstractMazeObjectView
      * @param parent
      * @param mazeObject
      */

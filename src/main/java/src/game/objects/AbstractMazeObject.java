@@ -11,15 +11,15 @@ import src.common.CommonMazeObject;
 import src.common.Observable;
 
 /**
- * MazeObject is abstract class for general maze object, that can be placed on a field
+ * AbstractMazeObject is abstract class for general maze object, that can be placed on a field
  *
  * @author      Martin Pribylina
  */
-public abstract class MazeObject implements CommonMazeObject, Observable.Observer {
+public abstract class AbstractMazeObject implements CommonMazeObject, Observable.Observer {
 
     public CommonField field;
 
-    public MazeObject(CommonField field){
+    public AbstractMazeObject(CommonField field){
         this.field = field;
     }
 

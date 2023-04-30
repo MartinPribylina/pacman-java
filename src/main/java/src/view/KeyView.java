@@ -15,10 +15,10 @@ import java.awt.*;
  *
  * @author      Martin Pribylina
  */
-public class KeyView extends MazeObjectView {
+public class KeyView extends AbstractMazeObjectView {
 
     /**
-     * @see MazeObjectView
+     * @see AbstractMazeObjectView
      * @param parent
      * @param mazeObject
      */

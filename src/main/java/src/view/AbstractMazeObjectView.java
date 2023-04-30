@@ -12,11 +12,11 @@ import src.game.objects.Ghost;
 import java.awt.*;
 
 /**
- * MazeObjectView is abstract base class for all Maze Objects which we want to display on Fields
+ * AbstractMazeObjectView is abstract base class for all Maze Objects which we want to display on Fields
  *
  * @author      Martin Pribylina
  */
-public abstract class MazeObjectView implements ComponentView {
+public abstract class AbstractMazeObjectView implements ComponentView {
     protected final CommonMazeObject mazeObject;
     private final FieldView parent;
 
@@ -25,7 +25,7 @@ public abstract class MazeObjectView implements ComponentView {
      * @param parent        Referencing where is the tile and how big is the tile to adjust position and size of Object Image
      * @param mazeObject    Referencing additional details to draw correct image
      */
-    public MazeObjectView(FieldView parent, CommonMazeObject mazeObject) {
+    public AbstractMazeObjectView(FieldView parent, CommonMazeObject mazeObject) {
         this.mazeObject = mazeObject;
         this.parent = parent;
     }

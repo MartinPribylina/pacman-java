@@ -97,7 +97,6 @@ public class MazeConfigure {
                             if (ghost.startX == x && ghost.startY == y)
                             {
                                 maze.setMazeObject(currentRow, col, new Ghost(pathField, ghost.type, ghost.path));
-                                System.out.println(ghost);
                                 break;
                             }
                         }

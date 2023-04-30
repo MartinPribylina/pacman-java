@@ -5,6 +5,8 @@
  ************************/
 package src.common;
 
+import java.util.List;
+
 /**
  * CommonField is interface for field
  *
@@ -16,6 +18,8 @@ public interface CommonField extends Observable {
     boolean isEmpty();
 
     CommonMazeObject get();
+
+    List<CommonMazeObject> getAll();
 
     boolean canMove();
 

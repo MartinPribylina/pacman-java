@@ -43,7 +43,7 @@ public abstract class GameLoop{
 
     protected void processInput() {
         try {
-            var lag = 200;
+            var lag = 350;
             Thread.sleep(lag);
         } catch (InterruptedException e) {
             e.printStackTrace();

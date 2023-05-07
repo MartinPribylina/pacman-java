@@ -133,26 +133,6 @@ public class FieldView extends JPanel implements Observable.Observer  {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        boolean a = false;
-        boolean b = false;
-
-        for (ComponentView view :
-                objects) {
-            if(view instanceof KeyView)
-            {
-                a = true;
-            }
-
-            if(view instanceof PacmanView)
-            {
-                b = true;
-            }
-        }
-
-        if (a && b)
-        {
-            System.out.println("aa");
-        }
 
         for (int i = 0; i < this.objects.size(); i++){
             objects.get(i).paintComponent(g);

@@ -7,8 +7,18 @@ package src.game.save;
 
 import java.io.*;
 
+/**
+ * StatsSaveManager is class for saving and loading stats data
+ *
+ * @author      Martin Pribylina
+ */
 public class StatsSaveManager {
     private static final String dataFilePath =  System.getProperty("user.dir") + "\\data\\Stats.bin";
+
+    /**
+     * Saves data
+     * @param data Stats data to save
+     */
     public static void SaveStats(StatsData data){
         try
         {
@@ -21,12 +31,17 @@ public class StatsSaveManager {
         }
     }
 
+    /**
+     * Loads stats data
+     * @return loaded data
+     */
     public static StatsData LoadStats(){
         try
         {
             FileInputStream fileInputStream = new FileInputStream(dataFilePath);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            return  (StatsData) objectInputStream.readObject();
+            StatsData statsData = (StatsData) objectInputStream.readObject();
+            return  statsData;
         }catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (Exception e){

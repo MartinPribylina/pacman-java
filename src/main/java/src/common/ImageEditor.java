@@ -8,6 +8,11 @@ package src.common;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * ImageEditor is utility class for easier manipulation with images
+ *
+ * @author      Martin Pribylina
+ */
 public class ImageEditor {
 
     public static Image ScaleImage(String filename, int width){

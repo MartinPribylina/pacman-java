@@ -1,7 +1,7 @@
 /*************************
  * Authors: Martin Pribylina
  *
- * Contains methods for changing objects move direction trough controller
+ * Contains methods for changing objects move direction through controller
  ************************/
 package src.game.core;
 
@@ -9,9 +9,13 @@ import src.common.CommonField;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.io.Serializable;
 
-public class PlayerActions implements Serializable {
+/**
+ * Ghost is class which contains actions which bind to keys for changing objects move direction through controller
+ *
+ * @author      Martin Pribylina
+ */
+public class PlayerActions {
 
     private final Action upAction, downAction, leftAction, rightAction;
 

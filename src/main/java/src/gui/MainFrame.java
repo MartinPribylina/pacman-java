@@ -7,12 +7,17 @@ package src.gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.Menu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
+/**
+ * MainFrame is a class initiating Main GUI Window and handling changes of its content
+ *
+ * @author      Martin Pribylina
+ * @author      Samuel Gall
+ */
 public class MainFrame extends JFrame implements ActionListener {
 
     private static final int width = 800;
@@ -32,6 +37,10 @@ public class MainFrame extends JFrame implements ActionListener {
 
     private File lastSelectedFile;
 
+    /**
+     * Window setup and initiation of MainMenu to display Menu options
+     */
+
     public MainFrame(){
         FrameSetup();
 
@@ -41,6 +50,9 @@ public class MainFrame extends JFrame implements ActionListener {
         this.setVisible(true); // set frame visible, Calling last so everything gets displayed
     }
 
+    /**
+     * Window setup
+     */
     private void FrameSetup(){
         this.setTitle(title); // set Title
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // close application
@@ -53,25 +65,26 @@ public class MainFrame extends JFrame implements ActionListener {
         this.getContentPane().setBackground(Color.BLACK); // change background color
     }
 
+    /**
+     * Handles button actions changing MainFrame content
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == menu.getPlay())
         {
-            System.out.println("Play");
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setCurrentDirectory(new File(mazeFolderPath));
             int result = fileChooser.showOpenDialog(this);
             if (result == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fileChooser.getSelectedFile();
                 lastSelectedFile = selectedFile;
-                System.out.println("Selected file: " + selectedFile.getAbsolutePath());
                 this.remove(menu);
                 gamePlay = new GamePlay(this, selectedFile.getAbsolutePath());
                 this.add(gamePlay);
                 Refresh();
             }
         }else if(e.getSource() == menu.getReplay()){
-            System.out.println("Replay");
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setCurrentDirectory(new File(replayFolderPath));
             int result = fileChooser.showOpenDialog(this);
@@ -93,10 +106,8 @@ public class MainFrame extends JFrame implements ActionListener {
             this.add(menu);
             Refresh();
         } else if(e.getSource() == menu.getExit()){
-            System.out.println("Exit");
             this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         }else if(gamePlay != null && (e.getSource() == gamePlay.getMenu() || e.getSource() == gamePlay.getError())){
-            gamePlay.getGameLoop().stop();
             this.remove(gamePlay);
             gamePlay = null;
             this.add(menu);
@@ -114,6 +125,9 @@ public class MainFrame extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Trigger Gfx refresh
+     */
     private void Refresh(){
         this.revalidate();
         this.repaint();

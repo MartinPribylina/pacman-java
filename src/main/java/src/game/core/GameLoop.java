@@ -5,6 +5,11 @@
  ************************/
 package src.game.core;
 
+/**
+ * GameLoop is abstract class that contains logic for running game
+ *
+ * @author      Martin Pribylina
+ */
 public abstract class GameLoop{
 
     protected volatile GameStatus status;

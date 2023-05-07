@@ -1,18 +1,21 @@
 /*************************
- * Authors: Martin Pribylina
+ * Authors: taken from Task 2 https://moodle.vut.cz/mod/folder/view.php?id=310208, further edited by Martin Pribylina
  *
- * Class for maze vizualization
+ * MazePresenter is class for game display, initiating FieldViews in Grid Layout
  ************************/
 package src;
 
 import src.common.CommonMaze;
-import src.gui.GamePlay;
 import src.gui.IGame;
 import src.view.FieldView;
 
 import java.awt.*;
 import javax.swing.*;
 
+/**
+ * MazePresenter is class for game display, initiating FieldViews in Grid Layout
+ * @author      Martin Pribylina
+ */
 public class MazePresenter extends JPanel{
 
     public MazePresenter(CommonMaze maze, IGame game) {

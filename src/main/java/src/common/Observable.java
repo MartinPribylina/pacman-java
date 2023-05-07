@@ -5,6 +5,11 @@
  ************************/
 package src.common;
 
+/**
+ * Observable is interface for observable objects mainly fields
+ *
+ * @author      Martin Pribylina
+ */
 public interface Observable {
     void addObserver(Observer var1);
 

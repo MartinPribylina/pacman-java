@@ -16,10 +16,14 @@ import src.game.utility.GameLogicHelper;
 import src.gui.IGame;
 
 import javax.swing.*;
-import java.io.*;
 import java.util.List;
 
-public class GameController implements Serializable {
+/**
+ * GameController is class that handles ghost logic and player's inputs, updates game each frame
+ *
+ * @author      Martin Pribylina
+ */
+public class GameController {
 
     private final CommonMaze maze;
     private CommonField.Direction pacmanDirection;

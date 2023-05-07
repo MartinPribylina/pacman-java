@@ -5,14 +5,21 @@
  ************************/
 package src.common;
 
-import java.io.Serializable;
+import java.util.List;
 
-public interface CommonField extends Observable, Serializable {
+/**
+ * CommonField is interface for field
+ *
+ * @author      Martin Pribylina
+ */
+public interface CommonField extends Observable {
     CommonField nextField(Direction var1);
 
     boolean isEmpty();
 
     CommonMazeObject get();
+
+    List<CommonMazeObject> getAll();
 
     boolean canMove();
 

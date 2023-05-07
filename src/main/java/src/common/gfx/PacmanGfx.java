@@ -14,6 +14,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * PacmanGfx is class handling logic for getting pacman images
+ *
+ * @author      Martin Pribylina
+ */
 public class PacmanGfx {
 
     public static Image GetImage(CommonField.Direction dir, int width, int pos){

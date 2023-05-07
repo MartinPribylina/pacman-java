@@ -12,12 +12,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * MainMenu is a class displaying and Handling Main Menu options e.g. Play, Replay, Stats, Exit
+ *
+ * @author      Martin Pribylina
+ */
 public class MainMenu extends JPanel {
     private JButton play;
     private JButton replay;
     private JButton stats;
     private JButton exit;
     private final ActionListener parentListener;
+
+    /**
+     *
+     * @param parentListener used for handling button actions outside this class in MainFrame
+     */
     public MainMenu(ActionListener parentListener){
         this.parentListener = parentListener;
 
@@ -28,6 +38,9 @@ public class MainMenu extends JPanel {
         SetupButtons();
     }
 
+    /**
+     * Display Pacman logo
+     */
     private void SetupHeader()
     {
         JLabel header = new JLabel();
@@ -41,6 +54,9 @@ public class MainMenu extends JPanel {
 
     }
 
+    /**
+     * Setup all Menu buttons
+     */
     private void SetupButtons(){
         JPanel middlePanel = new JPanel();
         middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.PAGE_AXIS));

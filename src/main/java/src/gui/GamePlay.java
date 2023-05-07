@@ -21,17 +21,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.font.FontRenderContext;
-import java.awt.font.LineBreakMeasurer;
-import java.awt.font.TextLayout;
-import java.awt.geom.Rectangle2D;
-import java.text.AttributedCharacterIterator;
-import java.text.AttributedString;
 
+/**
+ * GamePlay is a class displaying and handling Play functions
+ *
+ * @author      Martin Pribylina
+ */
+public class GamePlay extends AbstractGame implements ActionListener{
 
-public class GamePlay extends Game implements ActionListener{
-
-    private final JButton menu;
+    private JButton menu;
     private JButton pause;
     private JButton error;
     private JButton playAgain;
@@ -40,51 +38,33 @@ public class GamePlay extends Game implements ActionListener{
     private GameController gameController;
     private MazePresenter presenter;
 
+    private JLabel score, steps, lives;
+
+    /**
+     *
+     * @param parentListener used for handling button actions outside this class in MainFrame
+     * @param filePath Maze Map File Path
+     */
     public GamePlay(ActionListener parentListener, String filePath){
         this.parentListener = parentListener;
 
         this.setBackground(Color.BLACK);
         this.setLayout(new BorderLayout());
 
-        JPanel header = new JPanel();
-        header.setBackground(Color.BLACK);
-        header.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        this.add(header, BorderLayout.NORTH);
-        header.setPreferredSize(new Dimension(100, 50));
-        header.setLayout(new BorderLayout());
+        SetupHeader();
 
-        JPanel sideBar = new JPanel();
-        sideBar.setBackground(Color.BLACK);
-        sideBar.setLayout(new BoxLayout(sideBar, BoxLayout.PAGE_AXIS));
-        this.add(sideBar, BorderLayout.WEST);
-
-        menu = ElementCreator.CreateDefaultButton("Menu", 100, 50, parentListener);
-        pause = ElementCreator.CreateDefaultButton("Pause", 100, 50, this);
-        sideBar.add(menu);
-        sideBar.add(pause);
-
-        JLabel score = ElementCreator.CreateDefaultLabel("Score: 0");
-        score.setHorizontalTextPosition(JLabel.CENTER); // Horizontal text possition
-        score.setVerticalAlignment(JLabel.CENTER);
-        score.setHorizontalAlignment(JLabel.CENTER);
-        header.add(score, BorderLayout.CENTER);
-
-        JLabel steps = ElementCreator.CreateDefaultLabel("Steps: 0");
-        header.add(steps, BorderLayout.EAST);
-
-        JLabel lives = ElementCreator.CreateDefaultLabel("Lives: 0");
-        header.add(lives, BorderLayout.WEST);
+        SetupSideBar();
 
         MazeFileReaderResult result = MazeFileReader.ConfigureMaze(filePath, null);
         MazeConfigure mazeConfigure = result.getMazeConfigure();
-        CommonMaze maze = mazeConfigure.createMaze();
 
-        if (result.getErrorCode() != 0 || (mazeConfigure != null && !mazeConfigure.isReadingSuccess()) || maze == null)
+        if (result.getErrorCode() != 0 || (mazeConfigure != null && !mazeConfigure.isReadingSuccess()))
         {
             ShowError(result);
             return;
         }
 
+        CommonMaze maze = mazeConfigure.createMaze();
 
         presenter = new MazePresenter(maze, this);
         this.add(presenter, BorderLayout.CENTER);
@@ -98,21 +78,7 @@ public class GamePlay extends Game implements ActionListener{
 
         gameLoop = new FrameBasedGameLoop(gameController);
 
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('w'), "upAction");
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "upAction");
-        this.getActionMap().put("upAction", gameLoop.getPlayerActions().getUpAction());
-
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('s'), "downAction");
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "downAction");
-        this.getActionMap().put("downAction", gameLoop.getPlayerActions().getDownAction());
-
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('a'), "leftAction");
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"), "leftAction");
-        this.getActionMap().put("leftAction", gameLoop.getPlayerActions().getLeftAction());
-
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('d'), "rightAction");
-        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("RIGHT"), "rightAction");
-        this.getActionMap().put("rightAction", gameLoop.getPlayerActions().getRightAction());
+        SetupKeyActions();
 
         gameLoop.run();
     }
@@ -135,38 +101,55 @@ public class GamePlay extends Game implements ActionListener{
         errorPanel.add(wrap);
     }
 
-    public void paint(Graphics g){
-        super.paint(g);
+    public void SetupHeader(){
+        JPanel header = new JPanel();
+        header.setBackground(Color.BLACK);
+        header.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        this.add(header, BorderLayout.NORTH);
+        header.setPreferredSize(new Dimension(100, 50));
+        header.setLayout(new BorderLayout());
 
-        if (objectDescription == null)
-            return;
+        score = ElementCreator.CreateDefaultLabel("Score: 0");
+        score.setHorizontalTextPosition(JLabel.CENTER); // Horizontal text possition
+        score.setVerticalAlignment(JLabel.CENTER);
+        score.setHorizontalAlignment(JLabel.CENTER);
+        header.add(score, BorderLayout.CENTER);
 
-        Graphics2D g2 = (Graphics2D)g;
+        steps = ElementCreator.CreateDefaultLabel("Steps: 0");
+        header.add(steps, BorderLayout.EAST);
 
-        Rectangle2D rect = new Rectangle2D.Double(objectDescription.x, objectDescription.y,
-                objectDescription.size.width, objectDescription.size.height);
-        g2.setColor(Color.DARK_GRAY);
-        g2.fill(rect);
-        g2.setFont(new Font("Serif", 1, 20));
-        g2.setColor(Color.WHITE);
-        g2.drawString(objectDescription.title, objectDescription.x + 5, objectDescription.y + 20);
-        g2.setFont(new Font("Serif", 1, 10));
+        lives = ElementCreator.CreateDefaultLabel("Lives: 0");
+        header.add(lives, BorderLayout.WEST);
+    }
 
-        AttributedString as = new AttributedString(objectDescription.description);
-        AttributedCharacterIterator aci = as.getIterator();
-        FontRenderContext frc = g2.getFontRenderContext();
-        LineBreakMeasurer lbm = new LineBreakMeasurer(aci, frc);
+    public void SetupSideBar(){
+        JPanel sideBar = new JPanel();
+        sideBar.setBackground(Color.BLACK);
+        sideBar.setLayout(new BoxLayout(sideBar, BoxLayout.PAGE_AXIS));
+        this.add(sideBar, BorderLayout.WEST);
 
-        int x = objectDescription.x + 5;
-        int y = objectDescription.y + 40;
+        menu = ElementCreator.CreateDefaultButton("Menu", 100, 50, parentListener);
+        pause = ElementCreator.CreateDefaultButton("Pause", 100, 50, this);
+        sideBar.add(menu);
+        sideBar.add(pause);
+    }
 
-        while (lbm.getPosition() < aci.getEndIndex()) {
-            TextLayout tl = lbm.nextLayout(objectDescription.size.width);
-            tl.draw(g2, x, y + tl.getAscent());
-            y += tl.getDescent() + tl.getLeading() + tl.getAscent();
-        }
+    public void SetupKeyActions(){
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('w'), "upAction");
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "upAction");
+        this.getActionMap().put("upAction", gameLoop.getPlayerActions().getUpAction());
 
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('s'), "downAction");
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "downAction");
+        this.getActionMap().put("downAction", gameLoop.getPlayerActions().getDownAction());
 
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('a'), "leftAction");
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"), "leftAction");
+        this.getActionMap().put("leftAction", gameLoop.getPlayerActions().getLeftAction());
+
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('d'), "rightAction");
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("RIGHT"), "rightAction");
+        this.getActionMap().put("rightAction", gameLoop.getPlayerActions().getRightAction());
     }
 
     @Override
@@ -190,6 +173,8 @@ public class GamePlay extends Game implements ActionListener{
         wrap.add(playAgain);
         wrap.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
         endGame.add(wrap);
+
+        pause.setEnabled(false);
     }
 
     public JButton getMenu() {
@@ -210,10 +195,8 @@ public class GamePlay extends Game implements ActionListener{
         if (e.getSource() == pause){
             if (gameLoop.isGameRunning()){
                 gameLoop.stop();
-                pause.setText("Play");
             }else{
                 gameLoop.run();
-                pause.setText("Pause");
             }
         }
     }
@@ -221,7 +204,6 @@ public class GamePlay extends Game implements ActionListener{
     @Override
     public void setPacmanGoalDestinationClick(CommonField field) {
         if (!field.canMove()) {
-            System.out.println("Can't move there");
             return;
         }
         gameController.setPacmanGoalDestination(field);

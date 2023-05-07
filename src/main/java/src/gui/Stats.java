@@ -14,10 +14,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * Stats is a class displaying details about Player's Statistics
+ *
+ * @author      Martin Pribylina
+ */
 public class Stats extends JPanel {
     private JButton back;
 
     private final ActionListener parentListener;
+
+    /**
+     *
+     * @param parentListener used for handling back button action outside this class in MainFrame for handling returning back to MainMenu
+     */
 
     public Stats(ActionListener parentListener){
         this.parentListener = parentListener;
@@ -30,6 +40,9 @@ public class Stats extends JPanel {
         SetupBack();
     }
 
+    /**
+     * Display Pacman logo
+     */
     private void SetupHeader(){
         JLabel header = new JLabel();
         ImageIcon imageIcon = new ImageIcon(ImageEditor.ScaleImage("lib/pac-man-logo.png", 300));
@@ -41,6 +54,9 @@ public class Stats extends JPanel {
         header.setHorizontalAlignment(JLabel.CENTER); // Set Horizontal position within label
     }
 
+    /**
+     * Display Player Statistics
+     */
     private void SetupStats(){
         StatsData data = StatsSaveManager.LoadStats();
 
@@ -48,8 +64,6 @@ public class Stats extends JPanel {
         middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.PAGE_AXIS));
         middlePanel.setBackground(Color.BLACK);
         middlePanel.setBorder(BorderFactory.createEmptyBorder(20,250,20,250));
-
-
 
         JPanel panel = new JPanel();
         panel.setBackground(Color.BLACK);
@@ -79,8 +93,6 @@ public class Stats extends JPanel {
 
         middlePanel.add(panel);
 
-
-
         middlePanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
         panel = new JPanel();
@@ -104,11 +116,13 @@ public class Stats extends JPanel {
         this.add(middlePanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Setup Back button to return to MainMenu
+     */
     private void SetupBack(){
         JPanel panel = new JPanel();
         panel.setBackground(Color.BLACK);
-
-        panel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+        panel.setBorder(BorderFactory.createEmptyBorder(20,20,50,20));
 
         back = ElementCreator.CreateDefaultButton("Back", 150, 50, parentListener);
         panel.add(back);

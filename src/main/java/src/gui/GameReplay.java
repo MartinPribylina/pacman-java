@@ -26,7 +26,12 @@ import java.util.List;
 import java.util.Scanner;
 import java.io.File;
 
-public class GameReplay extends Game implements ActionListener{
+/**
+ * GameReplay is a class displaying and handling Replay functions
+ *
+ * @author      Samuel Gall
+ */
+public class GameReplay extends AbstractGame implements ActionListener{
     private final JButton menu;
     private JButton error;
     private JButton stepForward;
@@ -45,6 +50,12 @@ public class GameReplay extends Game implements ActionListener{
     private final ActionListener parentListener;
     private ReplayLoop rp;
     private DefaultPosition defaultPosition;
+
+    /**
+     *
+     * @param parentListener used for handling button actions outside this class in MainFrame
+     * @param logFile Log file path for reading replay details
+     */
     public GameReplay(ActionListener parentListener, File logFile) {
         this.parentListener = parentListener;
         this.logFile = logFile;
@@ -236,6 +247,8 @@ public class GameReplay extends Game implements ActionListener{
         }
         return path;
     }
+
+
     public JButton getMenu() {
         return menu;
     }

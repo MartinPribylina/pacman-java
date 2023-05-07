@@ -8,6 +8,11 @@ package src.common;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * AbstractObservableField is abstract class for managing observers on fields
+ *
+ * @author      Martin Pribylina
+ */
 public abstract class AbstractObservableField implements CommonField {
     private final Set<Observable.Observer> observers = new HashSet<>();
 

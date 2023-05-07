@@ -13,6 +13,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * MiscGfx is class handling logic for getting other images
+ *
+ * @author      Martin Pribylina
+ */
 public class MiscGfx {
 
     public static Image GetKey(int width){

@@ -1,7 +1,7 @@
 # Java Projekt
 ## Authors
-### Martin Pribylina
-### Samuel Gall
+### Martin Pribylina - xpriby19
+### Samuel Gall - xgalls00
 ## How to run
 ### Check if you have Maven Installed
 ``` mvn --version ```

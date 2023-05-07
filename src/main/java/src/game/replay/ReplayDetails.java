@@ -11,6 +11,11 @@ import src.common.CommonMaze;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ReplayDetails is class that holds data of the game, which are used for replay
+ *
+ * @author      Samuel Gall
+ */
 public class ReplayDetails {
     private CommonMaze maze;
     private int time;

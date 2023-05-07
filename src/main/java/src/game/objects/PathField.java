@@ -13,6 +13,11 @@ import src.common.CommonMazeObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * PathField is class for a field, that represents a path, objects can be placed on it
+ *
+ * @author      Martin Pribylina
+ */
 public class PathField extends AbstractObservableField implements CommonField {
     private final int row;
     private final int col;
@@ -47,6 +52,36 @@ public class PathField extends AbstractObservableField implements CommonField {
             }
         }
         return null;
+    }
+
+    @Override
+    public List<CommonMazeObject> getAll() {
+        List<CommonMazeObject> commonMazeObjects = new ArrayList<>();
+
+        for (Observer observer :
+                observers) {
+            if(observer instanceof Key)
+            {
+                commonMazeObjects.add ((CommonMazeObject) observer);
+            }
+        }
+
+        for (Observer observer :
+                observers) {
+            if(observer instanceof Ghost)
+            {
+                commonMazeObjects.add ((CommonMazeObject) observer);
+            }
+        }
+
+        for (Observer observer :
+                observers) {
+            if(observer instanceof Pacman)
+            {
+                commonMazeObjects.add ((CommonMazeObject) observer);
+            }
+        }
+        return commonMazeObjects;
     }
 
     public Pacman getPacman() {

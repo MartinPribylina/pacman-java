@@ -9,15 +9,20 @@ import src.common.CommonField;
 import src.common.CommonMaze;
 import src.common.CommonMazeObject;
 import src.game.objects.Ghost;
-import src.game.objects.MazeObject;
+import src.game.objects.AbstractMazeObject;
 
 import javax.swing.*;
 import java.util.List;
 
 import static src.common.CommonField.Direction.*;
 
+/**
+ * ReplayLoop is class for managing replay logic and updating Replay GUI
+ *
+ * @author      Samuel Gall
+ */
 public class ReplayLoop {
-    private JLabel steps, currentStep;
+    private JLabel currentStep;
     private JButton stepForward, stepBackwards, playForward, playBackwards, playPause;
     private Thread replayThread;
     private ReplayDetails replayDetails;
@@ -41,7 +46,6 @@ public class ReplayLoop {
                 for (CommonMazeObject ghostCommon : maze.ghosts()) {
                     moveGhost(ghostCommon, step);
                 }
-                System.out.println(step);
             }
         }else {
             for (;step > -1; step--){
@@ -49,7 +53,6 @@ public class ReplayLoop {
                 for (CommonMazeObject ghostCommon : maze.ghosts()) {
                     moveGhost(ghostCommon, step);
                 }
-                System.out.println(step);
             }
         }
 
@@ -116,12 +119,11 @@ public class ReplayLoop {
             }
             if (back) step--;
             UpdateGameStats();
-            System.out.println(step);
         }
     }
     public void movePacman(CommonMaze maze, int i) {
 
-        MazeObject pacman = (MazeObject) maze.pacman();
+        AbstractMazeObject pacman = (AbstractMazeObject) maze.pacman();
         List<CommonField.Direction> pacmanPath = replayDetails.getPacmanPath();
         CommonField.Direction dir = null;
         if (pacmanPath.get(i) != null && !back) {
@@ -139,7 +141,7 @@ public class ReplayLoop {
         }
     }
     public void moveGhost(CommonMazeObject CMOghost, int i) {
-            MazeObject ghost = (MazeObject) CMOghost;
+            AbstractMazeObject ghost = (AbstractMazeObject) CMOghost;
             CommonField.Direction dir = null;
             List<CommonField.Direction> ghostPath = ((Ghost) ghost).getGhostPath();
             if (ghostPath.get(i) != null && !back){

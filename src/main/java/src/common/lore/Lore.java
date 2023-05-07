@@ -5,6 +5,11 @@
  ************************/
 package src.common.lore;
 
+/**
+ * Lore is class holding lore data for descriptions
+ *
+ * @author      Martin Pribylina
+ */
 public class Lore {
     public static String ghostNames[] = new String[]{
             "Spooky Red",

@@ -7,11 +7,15 @@ package src.game.replay;
 
 import src.common.CommonField;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GhostData implements Serializable {
+/**
+ * ReplayDetails is class that holds data of ghosts
+ *
+ * @author      Samuel Gall
+ */
+public class GhostData {
 
     public List<CommonField.Direction> path = new ArrayList<>();
     public int type;

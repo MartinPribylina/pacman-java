@@ -10,7 +10,12 @@ import src.common.CommonField;
 import src.common.CommonMazeObject;
 import src.common.Observable;
 
-public class Pacman extends MazeObject implements CommonMazeObject {
+/**
+ * Pacman is class for pacman object, that can be placed on a field
+ *
+ * @author      Martin Pribylina
+ */
+public class Pacman extends AbstractMazeObject implements CommonMazeObject {
 
     private int lives;
     private int stepCounter;
@@ -51,6 +56,19 @@ public class Pacman extends MazeObject implements CommonMazeObject {
             Ghost ghost = new Ghost(field);
             if(((PathField) observable).contains(ghost)){
                 lives--;
+            }
+        }
+
+        if (!((PathField) observable).isEmpty()){
+            var objects = ((PathField) observable).getAll();
+
+            for (CommonMazeObject mazeObject :
+                    objects) {
+                if(mazeObject instanceof Key)
+                {
+                    hasKey = true;
+                    ((Key) mazeObject).field.removeObserver((Observable.Observer) mazeObject);
+                }
             }
         }
     }

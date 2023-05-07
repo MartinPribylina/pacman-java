@@ -9,6 +9,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * ElementCreator is utility class for fast and generalized creation of GUI elements such as Buttons and Labels
+ *
+ * @author      Martin Pribylina
+ */
 public class ElementCreator {
 
     private static final Font font = new Font(Font.SERIF, Font.BOLD, 20);

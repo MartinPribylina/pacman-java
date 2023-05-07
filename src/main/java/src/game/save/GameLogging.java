@@ -19,7 +19,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class GameLogging implements Serializable {
+/**
+ * GameLogging is class for saving game logs after each game frame
+ *
+ * @author      Samuel Gall
+ */
+public class GameLogging {
     private String filepath;
     private CommonMaze maze;
     private int time;
@@ -52,22 +57,16 @@ public class GameLogging implements Serializable {
     }
 
     public void saveIntoFile(){
-        System.out.println("Writing into file");
         String replayPath = System.getProperty("user.dir") + "\\data\\replay";
         try {
             Files.createDirectories(Paths.get(replayPath));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("-yyyyMMdd-HHmm");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("-yyyyMMdd-HHmmss");
         LocalDateTime now = LocalDateTime.now();
         try {
             File file = new File(replayPath + "\\Replay" + dtf.format(now) + ".txt");
-            if (file.createNewFile()) {
-                System.out.println("File created: " + file.getName());
-            } else {
-                System.out.println("File already exists.");
-            }
             FileWriter fileWriter = new FileWriter(file.getAbsolutePath());
 
             File mazeFile = new File(filepath);
@@ -106,21 +105,5 @@ public class GameLogging implements Serializable {
 
     public void setMaze(CommonMaze maze) {
         this.maze = maze;
-    }
-
-    public int getTime() {
-        return time;
-    }
-
-    public List<CommonField.Direction> getPacmanPath() {
-        return pacmanPath;
-    }
-
-    public String getFilepath() {
-        return filepath;
-    }
-
-    public Dictionary<PathField, GhostData> getGhostsData() {
-        return ghostsData;
     }
 }

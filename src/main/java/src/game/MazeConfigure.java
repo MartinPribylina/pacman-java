@@ -1,8 +1,8 @@
-/*************************
- * Authors: Martin Pribylina, Samuel Gall
+/**
+ * @author Martin Pribylina, Samuel Gall
  *
  * Class for building a maze
- ************************/
+ */
 package src.game;
 
 
@@ -12,7 +12,12 @@ import src.game.replay.GhostData;
 import java.io.Serializable;
 import java.util.List;
 
-public class MazeConfigure implements Serializable {
+/**
+ * MazeConfigure is class handling logic for creating Maze
+ *
+ * @author      Martin Pribylina
+ */
+public class MazeConfigure {
 
     private int rows, cols;
     private int currentRow;
@@ -22,7 +27,9 @@ public class MazeConfigure implements Serializable {
     private List<GhostData> ghostsData;
 
     boolean mazeHasKey = false;
-
+    /**
+     * Class constructor.
+     */
     public MazeConfigure()
     {
 
@@ -90,7 +97,6 @@ public class MazeConfigure implements Serializable {
                             if (ghost.startX == x && ghost.startY == y)
                             {
                                 maze.setMazeObject(currentRow, col, new Ghost(pathField, ghost.type, ghost.path));
-                                System.out.println(ghost);
                                 break;
                             }
                         }
